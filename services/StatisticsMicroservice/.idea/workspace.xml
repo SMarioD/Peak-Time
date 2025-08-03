@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="90dbb75c-2b92-4bd1-b733-6dbfee807c13" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../../client/.idea/client.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../AuthentificationMicroservice/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../AuthentificationMicroservice/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../AuthentificationMicroservice/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../AuthentificationMicroservice/.idea/kotlinc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../AuthentificationMicroservice/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../AuthentificationMicroservice/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../AuthentificationMicroservice/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../AuthentificationMicroservice/src/main/kotlin/com/sd/laborator/Hello.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../AuthentificationMicroservice/src/test/kotlin/com/sd/laborator/HelloTest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CalendarMicroservice/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CalendarMicroservice/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CalendarMicroservice/.idea/kotlinc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CalendarMicroservice/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CalendarMicroservice/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CalendarMicroservice/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CalendarMicroservice/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CalendarMicroservice/src/main/kotlin/com/sd/laborator/Hello.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CalendarMicroservice/src/test/kotlin/com/sd/laborator/HelloTest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MessagingMicroservice/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MessagingMicroservice/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MessagingMicroservice/.idea/kotlinc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MessagingMicroservice/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MessagingMicroservice/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MessagingMicroservice/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MessagingMicroservice/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MessagingMicroservice/src/main/kotlin/com/sd/laborator/Hello.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MessagingMicroservice/src/test/kotlin/com/sd/laborator/HelloTest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PlanningMicroservice/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PlanningMicroservice/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PlanningMicroservice/.idea/kotlinc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PlanningMicroservice/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PlanningMicroservice/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PlanningMicroservice/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PlanningMicroservice/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PlanningMicroservice/src/main/kotlin/com/sd/laborator/Hello.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PlanningMicroservice/src/test/kotlin/com/sd/laborator/HelloTest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/Hello.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/com/sd/laborator/HelloTest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TaskManagerMicroservice/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TaskManagerMicroservice/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TaskManagerMicroservice/.idea/kotlinc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TaskManagerMicroservice/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TaskManagerMicroservice/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TaskManagerMicroservice/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TaskManagerMicroservice/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TaskManagerMicroservice/src/main/kotlin/com/sd/laborator/Hello.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TaskManagerMicroservice/src/test/kotlin/com/sd/laborator/HelloTest.kt" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 4
+}]]></component>
+  <component name="ProjectId" id="30ls6ybEr6TVQpsbDffCrUfHs2N" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.27812.49" />
+        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-IU-251.27812.49" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="90dbb75c-2b92-4bd1-b733-6dbfee807c13" name="Changes" comment="" />
+      <created>1754213324176</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1754213324176</updated>
+      <workItem from="1754213325231" duration="712000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
