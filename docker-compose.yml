@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  # --- Baza de Date pentru Autentificare ---
+  auth-db:
+    image: postgres:13-alpine
+    container_name: auth-db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: parola_secreta
+      POSTGRES_DB: auth_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - auth_db_data:/var/lib/postgresql/data
+
+  # --- Microserviciul de Autentificare ---
+  auth-service:
+    container_name: auth-service
+    build:
+      # Calea relativă către folderul microserviciului
+      context: ./services/AuthentificationMicroservice
+    ports:
+      - "8081:8080"
+    depends_on:
+      - auth-db
+    environment:
+      DB_HOST: auth-db
+      DB_PORT: 5432
+      DB_NAME: auth_db
+      DB_USER: admin
+      DB_PASSWORD: parola_secreta
+
+volumes:
+  auth_db_data:
