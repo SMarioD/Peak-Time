@@ -1,5 +1,6 @@
 package com.sd.laborator.service
 
+import com.sd.laborator.model.LoginRequest
 import com.sd.laborator.model.RegisterRequest
 import com.sd.laborator.repository.UserRepository
 import com.sd.laborator.model.User
@@ -7,7 +8,7 @@ import org.springframework.stereotype.Service
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
 @Service
-class AuthService(private val userRepository:UserRepository) {
+class AuthService(private val userRepository:UserRepository, private val jwtService: JwtService) {
     private val passwordEncoder=BCryptPasswordEncoder()
 
     fun registerUser(request:RegisterRequest):User{
@@ -26,5 +27,18 @@ class AuthService(private val userRepository:UserRepository) {
         )
 
         return userRepository.save(newUser)
+    }
+
+    fun loginUser(request: LoginRequest):Pair<User,String>{
+        val user=userRepository.findByEmail(request.email)?: throw IllegalArgumentException("Utilizatorul nu a fost gasit.")
+
+        if(!passwordEncoder.matches(request.parola, user.parolaHash))
+        {
+            throw IllegalArgumentException("Parola incorecta.")
+        }
+
+        val token=jwtService.generateToken(user)
+
+        return Pair(user,token)
     }
 }
