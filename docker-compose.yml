@@ -1,7 +1,6 @@
 version: '3.8'
 
 services:
-  # --- Baza de Date pentru Autentificare ---
   auth-db:
     image: postgres:13-alpine
     container_name: auth-db
@@ -14,11 +13,9 @@ services:
     volumes:
       - auth_db_data:/var/lib/postgresql/data
 
-  # --- Microserviciul de Autentificare ---
   auth-service:
     container_name: auth-service
     build:
-      # Calea relativă către folderul microserviciului
       context: ./services/AuthentificationMicroservice
     ports:
       - "8081:8080"
@@ -30,6 +27,44 @@ services:
       DB_NAME: auth_db
       DB_USER: admin
       DB_PASSWORD: parola_secreta
+      
+  calendar-db:
+    image: postgres:13-alpine
+    container_name: calendar-db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: parola_secreta
+      POSTGRES_DB: calendar_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - calendar_db_data:/var/lib/postgresql/data
+      
+  calendar-service:
+    container_name: calendar-service
+    build:
+      context: ./services/CalendarMicroservice
+    ports:
+      - "8082:8080"
+    depends_on:
+      - calendar-db
+    environment:
+      DB_HOST: calendar-db
+      DB_PORT: 5432
+      DB_NAME: calendar_db
+      DB_USER: admin
+      DB_PASSWORD: parola_secreta
+      
+  gateway-service:
+    container_name: gateway-service
+    build:
+      context: ./services/PlanningMicroservice 
+    ports:
+      - "8080:8080"
+    depends_on:
+      - auth-service 
+      - calendar-service 
 
 volumes:
   auth_db_data:
+  calendar_db_data:

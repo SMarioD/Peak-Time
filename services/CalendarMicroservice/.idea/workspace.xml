@@ -5,42 +5,33 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d3bfd3ba-92b8-42a9-8f64-acc9a7c76711" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../AuthentificationMicroservice/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../AuthentificationMicroservice/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../AuthentificationMicroservice/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../AuthentificationMicroservice/.idea/kotlinc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../AuthentificationMicroservice/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../AuthentificationMicroservice/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../AuthentificationMicroservice/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../AuthentificationMicroservice/src/main/kotlin/com/sd/laborator/Hello.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../AuthentificationMicroservice/src/test/kotlin/com/sd/laborator/HelloTest.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/Hello.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/kotlin/com/sd/laborator/HelloTest.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../PlanningMicroservice/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../PlanningMicroservice/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../PlanningMicroservice/.idea/kotlinc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../PlanningMicroservice/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../PlanningMicroservice/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../PlanningMicroservice/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../PlanningMicroservice/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../PlanningMicroservice/src/main/kotlin/com/sd/laborator/Hello.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../PlanningMicroservice/src/test/kotlin/com/sd/laborator/HelloTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../../docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/Hello.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../PlanningMicroservice/src/main/kotlin/com/sd/laborator/PlanningMicroserviceApplication.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PlanningMicroservice/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../PlanningMicroservice/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PlanningMicroservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../PlanningMicroservice/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PlanningMicroservice/src/main/kotlin/com/sd/laborator/Hello.kt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Kotlin File" />
+        <option value="Kotlin Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 1
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="30lkmdxmNvUvWetRqL8f0aUAFwF" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -49,11 +40,15 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
+    "Maven.CalendarMicroservice [clean].executor": "Run",
+    "Maven.CalendarMicroservice [package].executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/mario/Local_Disk_Storage/Licenta/Project/services/AuthentificationMicroservice",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -65,8 +60,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.27812.49" />
-        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-IU-251.27812.49" />
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.23892.409" />
+        <option value="bundled-js-predefined-d6986cc7102b-e03c56caf84a-JavaScript-IU-252.23892.409" />
       </set>
     </attachedChunks>
   </component>
@@ -78,6 +73,7 @@
       <option name="presentableId" value="Default" />
       <updated>1754209708193</updated>
       <workItem from="1754209709229" duration="2082000" />
+      <workItem from="1754636212599" duration="5864000" />
     </task>
     <servers />
   </component>
