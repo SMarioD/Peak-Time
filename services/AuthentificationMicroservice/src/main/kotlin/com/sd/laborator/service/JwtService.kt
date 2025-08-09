@@ -10,7 +10,7 @@ import java.util.Date
 
 @Service
 class JwtService {
-    private val secretKey:Key=Keys.secretKeyFor(SignatureAlgorithm.HS256)
+    private val secretKey: Key = Keys.hmacShaKeyFor("CheieSecretaFoarteLungaSiComplexaPentruProiectulDeLicenta123".toByteArray())
     fun generateToken(user: User):String{
         val claims: MutableMap<String, Any> = HashMap()
         claims["userId"]=user.id
