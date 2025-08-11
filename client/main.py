@@ -1,6 +1,7 @@
 import sys
 from PyQt5.QtWidgets import QApplication,QWidget,QLabel,QLineEdit,QPushButton,QVBoxLayout,QMessageBox
 import requests
+from main_window import MainWindow
 
 class LoginWindow(QWidget):
     def __init__(self):
@@ -8,6 +9,7 @@ class LoginWindow(QWidget):
         self.setWindowTitle("Autentificare - Peak Time")
         self.setGeometry(100,100,300,200)
         self.initUI()
+        self.main_win=None
 
     def initUI(self):
         layout=QVBoxLayout()
@@ -50,18 +52,18 @@ class LoginWindow(QWidget):
         }
 
         try:
-            response=requests.post(login_url,json=payload)
+            response = requests.post(login_url, json=payload)
 
             if response.status_code==200:
                 response_data=response.json()
                 jwt_token=response_data.get("token")
 
-                #TODO Salvam token-ul intr-un loc sigur
                 print(f"Login reusit! Token: {jwt_token}")
 
                 QMessageBox.information(self,"Succes","Autentificare reusita!")
 
-                #TODO: Deschidem fereastra principala
+                self.main_win=MainWindow(jwt_token)
+                self.main_win.show()
                 self.close()
             else:
                 error_data=response.json()
