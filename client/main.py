@@ -57,12 +57,13 @@ class LoginWindow(QWidget):
             if response.status_code==200:
                 response_data=response.json()
                 jwt_token=response_data.get("token")
+                user_id = response_data.get("userId")
 
                 print(f"Login reusit! Token: {jwt_token}")
 
                 QMessageBox.information(self,"Succes","Autentificare reusita!")
 
-                self.main_win=MainWindow(jwt_token)
+                self.main_win=MainWindow(jwt_token,user_id)
                 self.main_win.show()
                 self.close()
             else:

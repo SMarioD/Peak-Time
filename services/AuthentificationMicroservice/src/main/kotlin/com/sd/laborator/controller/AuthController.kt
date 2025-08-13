@@ -4,6 +4,7 @@ import com.sd.laborator.model.ConnectionRequest
 import com.sd.laborator.model.User
 import com.sd.laborator.model.LoginRequest
 import com.sd.laborator.model.RegisterRequest
+import com.sd.laborator.model.UserResponse
 import com.sd.laborator.service.AuthService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -90,6 +91,19 @@ class AuthController (private val authService: AuthService) {
             ResponseEntity.ok(updatedConnection)
         } catch (e: Exception) {
             ResponseEntity.badRequest().body(mapOf("error" to e.message))
+        }
+    }
+
+    @PostMapping("/users/details")
+    fun getUsersDetails(@RequestBody userIds: List<Int>): ResponseEntity<Any> {
+        return try {
+            val users = authService.getUsersDetails(userIds)
+            val response = users.map { user ->
+                UserResponse(id = user.id, email = user.email, nume = user.nume, prenume = user.prenume)
+            }
+            ResponseEntity.ok(response)
+        } catch (e: Exception) {
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mapOf("error" to "Nu s-au putut prelua detaliile utilizatorilor."))
         }
     }
 }

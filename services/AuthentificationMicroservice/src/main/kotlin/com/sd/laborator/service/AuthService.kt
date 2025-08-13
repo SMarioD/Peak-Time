@@ -64,13 +64,21 @@ class AuthService(private val userRepository:UserRepository, private val connect
         return connectionRepository.findByUtilizator1IdOrUtilizator2Id(userId, userId)
     }
 
-    fun updateConnectionStatus(connectionId: Int, newStatus: String): Connection {
+    fun getUsersDetails(userIds: List<Int>): List<User> {
+        return userRepository.findAllById(userIds)
+    }
+    fun updateConnectionStatus(connectionId: Int, newStatus: String): Connection? {
         val connection = connectionRepository.findById(connectionId)
-            .orElseThrow { IllegalArgumentException("Conexiunea cu ID-ul $connectionId nu a fost gasita.") }
+            .orElseThrow { IllegalArgumentException("Conexiunea ...") }
 
-        // TODO: Verificam daca utilizatorul curent are dreptul sa modifice aceasta cerere
+        if (newStatus == "acceptat") {
+            connection.status = newStatus
+            return connectionRepository.save(connection)
+        } else if (newStatus == "respins") {
+            connectionRepository.delete(connection)
+            return null
+        }
 
-        connection.status = newStatus
-        return connectionRepository.save(connection)
+        throw IllegalArgumentException("Status invalid: $newStatus")
     }
 }
