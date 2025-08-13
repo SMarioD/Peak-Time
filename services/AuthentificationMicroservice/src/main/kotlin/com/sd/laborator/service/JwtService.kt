@@ -2,6 +2,7 @@ package com.sd.laborator.service
 
 import com.sd.laborator.model.User
 import io.jsonwebtoken.Jwts
+import io.jsonwebtoken.Claims
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
 import org.springframework.stereotype.Service
@@ -26,5 +27,12 @@ class JwtService {
             .setExpiration(expirationDate)
             .signWith(secretKey)
             .compact()
+    }
+    fun extractAllClaims(token: String): Claims {
+        return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).body
+    }
+    fun validateToken(token: String): Boolean {
+        val expirationDate = extractAllClaims(token).expiration
+        return !expirationDate.before(Date())
     }
 }

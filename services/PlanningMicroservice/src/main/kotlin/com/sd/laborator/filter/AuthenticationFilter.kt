@@ -9,29 +9,30 @@ import org.springframework.stereotype.Component
 @Component
 class AuthenticationFilter(private val jwtUtil: JwtUtil) : AbstractGatewayFilterFactory<AuthenticationFilter.Config>(Config::class.java) {
 
-    class Config {}
+    class Config
 
     override fun apply(config: Config): GatewayFilter {
-        return GatewayFilter{
-            exchange, chain ->
-            val request=exchange.request
-            val response = exchange.response
+        return GatewayFilter { exchange, chain ->
+            val request = exchange.request
+            val path = request.uri.path
 
-            if (request.uri.path.contains("/auth")) {
+            if (path == "/api/v1/auth/register" || path == "/api/v1/auth/login") {
                 return@GatewayFilter chain.filter(exchange)
             }
 
             val authHeader = request.headers.getFirst("Authorization")
             if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-                response.statusCode = HttpStatus.UNAUTHORIZED
-                return@GatewayFilter response.setComplete()
+                exchange.response.statusCode = HttpStatus.UNAUTHORIZED
+                return@GatewayFilter exchange.response.setComplete()
             }
+
             val token = authHeader.substring(7)
 
             try {
                 if (jwtUtil.validateToken(token)) {
                     val claims = jwtUtil.extractAllClaims(token)
                     val userId = claims["userId"].toString()
+
                     val modifiedRequest = request.mutate()
                         .header("X-User-Id", userId)
                         .build()
@@ -39,12 +40,12 @@ class AuthenticationFilter(private val jwtUtil: JwtUtil) : AbstractGatewayFilter
                     return@GatewayFilter chain.filter(exchange.mutate().request(modifiedRequest).build())
                 }
             } catch (e: Exception) {
-                response.statusCode = HttpStatus.UNAUTHORIZED
-                return@GatewayFilter response.setComplete()
+                exchange.response.statusCode = HttpStatus.UNAUTHORIZED
+                return@GatewayFilter exchange.response.setComplete()
             }
 
-            response.statusCode = HttpStatus.UNAUTHORIZED
-            return@GatewayFilter response.setComplete()
+            exchange.response.statusCode = HttpStatus.UNAUTHORIZED
+            return@GatewayFilter exchange.response.setComplete()
         }
     }
 }

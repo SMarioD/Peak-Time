@@ -1,16 +1,21 @@
 package com.sd.laborator.controller
 
+import com.sd.laborator.model.ConnectionRequest
 import com.sd.laborator.model.User
 import com.sd.laborator.model.LoginRequest
 import com.sd.laborator.model.RegisterRequest
 import com.sd.laborator.service.AuthService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import javax.xml.ws.Response
+import org.springframework.web.bind.annotation.RequestHeader
+
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -52,6 +57,39 @@ class AuthController (private val authService: AuthService) {
             ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(mapOf("error" to e.message))
         }catch (e: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mapOf("error" to "A aparut o eroare interna."))
+        }
+    }
+
+    @PostMapping("/connections")
+    fun sendConnectionRequest(@RequestBody request: ConnectionRequest, @RequestHeader("X-User-Id") senderId: Int): ResponseEntity<Any> {
+        return try {
+            authService.sendConnectionRequest(senderId, request.email)
+            ResponseEntity.ok(mapOf("message" to "Cerere de conexiune trimisa cu succes."))
+        } catch (e: Exception) {
+            ResponseEntity.badRequest().body(mapOf("error" to e.message))
+        }
+    }
+
+    @GetMapping("/connections")
+    fun getConnections(@RequestHeader("X-User-Id") userId: Int): ResponseEntity<Any> {
+        return try {
+            val connections = authService.getUserConnections(userId)
+            ResponseEntity.ok(connections)
+        } catch (e: Exception) {
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mapOf("error" to e.message))
+        }
+    }
+
+    @PutMapping("/connections/{id}")
+    fun updateConnection(@PathVariable id: Int, @RequestBody statusUpdate: Map<String, String>): ResponseEntity<Any> {
+        // TODO: Verificam daca utilizatorul curent este destinatarul acestei cereri
+
+        return try {
+            val newStatus = statusUpdate["status"] ?: throw IllegalArgumentException("Statusul este obligatoriu.")
+            val updatedConnection = authService.updateConnectionStatus(id, newStatus)
+            ResponseEntity.ok(updatedConnection)
+        } catch (e: Exception) {
+            ResponseEntity.badRequest().body(mapOf("error" to e.message))
         }
     }
 }

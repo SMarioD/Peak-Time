@@ -1,10 +1,10 @@
 from socket import create_connection
 import requests
-from PyQt5.QtWidgets import QWidget, QLabel, QMessageBox, QHBoxLayout, QVBoxLayout, QPushButton, QCalendarWidget, QMenu, \
-    QDialog
+from PyQt5.QtWidgets import QWidget, QLabel, QMessageBox, QHBoxLayout, QVBoxLayout, QPushButton, QCalendarWidget, QMenu, QDialog
 from PyQt5.QtCore import Qt
 from datetime import datetime
 from new_event_dialog import NewEventDialog
+from new_connection_dialog import NewConnectionDialog
 
 
 class MainWindow(QWidget):
@@ -16,6 +16,7 @@ class MainWindow(QWidget):
         self.setGeometry(100, 100, 800, 600)
         self.initUI()
         self.load_calendar_events()
+        self.load_connections()
 
     def initUI(self):
         main_layout = QHBoxLayout()
@@ -24,6 +25,8 @@ class MainWindow(QWidget):
         left_layout = QVBoxLayout()
         left_layout.setAlignment(Qt.AlignTop)
         main_layout.addLayout(left_layout)
+        self.connections_label = QLabel("Conexiunile tale:")
+        left_layout.addWidget(self.connections_label)
 
         # --- ZONA CENTRALĂ ---
         center_layout = QVBoxLayout()
@@ -93,6 +96,8 @@ class MainWindow(QWidget):
         #TODO: Adauga logica pentru fiecare
         if selected_action == add_event_action:
             self.handle_add_event()
+        elif selected_action == create_connection_action:
+            self.handle_add_connection()
         elif selected_action == logout_action:
             print("Utilizatorul dorește să se delogheze.")
 
@@ -117,6 +122,30 @@ class MainWindow(QWidget):
             except requests.exceptions.RequestException as e:
                 QMessageBox.critical(self, "Eroare de Conexiune", str(e))
 
+    def handle_add_connection(self):
+        dialog = NewConnectionDialog(self)
+        if dialog.exec_() == QDialog.Accepted:
+            email = dialog.get_email()
+
+            if not email:
+                QMessageBox.warning(self, "Eroare", "Email-ul nu poate fi gol.")
+                return
+
+            connections_url = "http://localhost:8080/api/v1/auth/connections"
+            headers = {"Authorization": f"Bearer {self.jwt_token}"}
+            payload = {"email": email}
+
+            try:
+                response = requests.post(connections_url, headers=headers, json=payload)
+                if response.status_code == 200:
+                    QMessageBox.information(self, "Succes", "Cererea de conexiune a fost trimisă.")
+                    self.load_connections()
+                else:
+                    error_data = response.json()
+                    QMessageBox.critical(self, "Eroare", error_data.get("error", "A apărut o eroare."))
+            except requests.exceptions.RequestException as e:
+                QMessageBox.critical(self, "Eroare de Conexiune", str(e))
+
     def load_calendar_events(self):
         print("Încercare de a încărca evenimentele din calendar...")
 
@@ -136,3 +165,23 @@ class MainWindow(QWidget):
                 QMessageBox.critical(self, "Eroare", "Nu s-au putut încărca evenimentele.")
         except requests.exceptions.RequestException as e:
             QMessageBox.critical(self, "Eroare de Conexiune", str(e))
+
+    def load_connections(self):
+        connections_url = "http://localhost:8080/api/v1/auth/connections"
+        headers = {"Authorization": f"Bearer {self.jwt_token}"}
+        try:
+            response = requests.get(connections_url, headers=headers)
+            if response.status_code == 200:
+                connections = response.json()
+                display_text = "Conexiunile tale:\n"
+                if not connections:
+                    display_text += "Nicio conexiune."
+                else:
+                    for conn in connections:
+                        # TODO: Afisam email-ul, nu ID-ul. Vom avea nevoie de un endpoint nou.
+                        display_text += f"- User ID: {conn.get('utilizator2Id')} ({conn.get('status')})\n"
+                self.connections_label.setText(display_text)
+            else:
+                self.connections_label.setText("Eroare la încărcarea conexiunilor.")
+        except requests.exceptions.RequestException as e:
+            self.connections_label.setText("Eroare de conexiune.")

@@ -5,11 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="745888c1-97b2-4c6a-851b-914f02e8af2e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../AuthentificationMicroservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../AuthentificationMicroservice/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AuthentificationMicroservice/src/main/kotlin/com/sd/laborator/config/SecurityConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../AuthentificationMicroservice/src/main/kotlin/com/sd/laborator/config/SecurityConfig.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AuthentificationMicroservice/src/main/kotlin/com/sd/laborator/controller/AuthController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../AuthentificationMicroservice/src/main/kotlin/com/sd/laborator/controller/AuthController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AuthentificationMicroservice/src/main/kotlin/com/sd/laborator/service/AuthService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../AuthentificationMicroservice/src/main/kotlin/com/sd/laborator/service/AuthService.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../AuthentificationMicroservice/src/main/kotlin/com/sd/laborator/service/JwtService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../AuthentificationMicroservice/src/main/kotlin/com/sd/laborator/service/JwtService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CalendarMicroservice/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../CalendarMicroservice/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CalendarMicroservice/src/main/kotlin/com/sd/laborator/controller/CalendarController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../CalendarMicroservice/src/main/kotlin/com/sd/laborator/controller/CalendarController.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/filter/AuthenticationFilter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/filter/AuthenticationFilter.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -21,6 +23,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Kotlin File" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -40,13 +43,14 @@
     "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
     "Maven.PlanningMicroservice [clean].executor": "Run",
     "Maven.PlanningMicroservice [package].executor": "Run",
+    "Maven.PlanningMicroservice [validate].executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/mario/Local_Disk_Storage/Licenta/Project/services/CalendarMicroservice",
+    "last_opened_file_path": "/home/mario/Local_Disk_Storage/Licenta/Project/services/PlanningMicroservice",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -85,6 +89,7 @@
       <workItem from="1754635691098" duration="517000" />
       <workItem from="1754638966722" duration="3184000" />
       <workItem from="1754721295083" duration="2245000" />
+      <workItem from="1755076762276" duration="457000" />
     </task>
     <servers />
   </component>
