@@ -26,6 +26,13 @@ open class GatewayConfig {
                     }
                     .uri("http://calendar-service:8080")
             }
+            .route("task-service-route") { r ->
+                r.path("/api/v1/tasks/**")
+                    .filters { f ->
+                        f.filter(authFilter.apply(AuthenticationFilter.Config()))
+                    }
+                    .uri("http://task-service:8080")
+            }
             .build()
     }
 }

@@ -5,13 +5,16 @@ from PyQt5.QtCore import Qt
 from datetime import datetime
 from new_event_dialog import NewEventDialog
 from new_connection_dialog import NewConnectionDialog
+from tasks_window import TasksWindow
 
 
 class MainWindow(QWidget):
-    def __init__(self, jwt_token,user_id):
+    def __init__(self, jwt_token,user_id,user_role):
         super().__init__()
         self.jwt_token = jwt_token
         self.current_user_id = user_id
+        self.current_user_role = user_role
+        self.tasks_win = None
         self.events_data = []
         self.setWindowTitle("Peak Time - Panou Principal")
         self.setGeometry(100, 100, 800, 600)
@@ -107,6 +110,19 @@ class MainWindow(QWidget):
         share_plans_action = context_menu.addAction("Partajează planuri")
         send_message_action = context_menu.addAction("Trimite mesaj")
 
+        manage_team_action = None
+        statistics_action = None
+        manage_tasks_action = None
+
+        if self.current_user_role == 'team_leader':
+            context_menu.addSeparator()
+            manage_team_action = context_menu.addAction("Management Echipă")
+            statistics_action = context_menu.addAction("Vezi Statistici")
+        elif self.current_user_role == 'angajat':
+            context_menu.addSeparator()
+            manage_tasks_action = context_menu.addAction("Sarcinile Mele")
+
+
         context_menu.addSeparator()
         logout_action=context_menu.addAction("Logout")
 
@@ -114,12 +130,19 @@ class MainWindow(QWidget):
         selected_action = context_menu.exec_(point)
 
         #TODO: Adauga logica pentru fiecare
-        if selected_action == add_event_action:
-            self.handle_add_event()
-        elif selected_action == create_connection_action:
-            self.handle_add_connection()
-        elif selected_action == logout_action:
-            print("Utilizatorul dorește să se delogheze.")
+        if selected_action:
+            if selected_action == add_event_action:
+                self.handle_add_event()
+            elif selected_action == create_connection_action:
+                self.handle_add_connection()
+            elif selected_action == manage_team_action:
+                print("Se deschide fereastra de management echipă...")
+            elif selected_action == manage_tasks_action:
+                print("Se deschide fereastra cu sarcinile angajatului...")
+                self.tasks_win = TasksWindow(self.jwt_token, self.current_user_id)
+                self.tasks_win.show()
+            elif selected_action == logout_action:
+                print("Utilizatorul dorește să se delogheze.")
 
     def handle_add_event(self):
         selected_date = self.calendar_widget.selectedDate()

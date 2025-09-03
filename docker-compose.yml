@@ -55,6 +55,33 @@ services:
       DB_USER: admin
       DB_PASSWORD: parola_secreta
       
+  task-db:
+    image: postgres:13-alpine
+    container_name: task-db
+    environment:
+      POSTGRES_USER: admin 
+      POSTGRES_PASSWORD: parola_secreta
+      POSTGRES_DB: task_db
+    ports:
+      - "5434:5432"
+    volumes:
+      - task_db_data:/var/lib/postgresql/data
+      
+  task-service:
+    container_name: task-service
+    build:
+      context: ./services/TaskManagerMicroservice 
+    ports:
+      - "8083:8080"
+    depends_on:
+      - task-db
+    environment:
+      DB_HOST: task-db
+      DB_PORT: 5432
+      DB_NAME: task_db
+      DB_USER: admin
+      DB_PASSWORD: parola_secreta
+      
   gateway-service:
     container_name: gateway-service
     build:
@@ -68,3 +95,4 @@ services:
 volumes:
   auth_db_data:
   calendar_db_data:
+  task_db_data:
