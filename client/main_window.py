@@ -6,6 +6,7 @@ from datetime import datetime
 from new_event_dialog import NewEventDialog
 from new_connection_dialog import NewConnectionDialog
 from tasks_window import TasksWindow
+from team_management_window import TeamManagementWindow
 
 
 class MainWindow(QWidget):
@@ -15,6 +16,7 @@ class MainWindow(QWidget):
         self.current_user_id = user_id
         self.current_user_role = user_role
         self.tasks_win = None
+        self.team_management_win = None
         self.events_data = []
         self.setWindowTitle("Peak Time - Panou Principal")
         self.setGeometry(100, 100, 800, 600)
@@ -137,6 +139,8 @@ class MainWindow(QWidget):
                 self.handle_add_connection()
             elif selected_action == manage_team_action:
                 print("Se deschide fereastra de management echipă...")
+                self.team_management_win = TeamManagementWindow(self.jwt_token, self.current_user_id)
+                self.team_management_win.show()
             elif selected_action == manage_tasks_action:
                 print("Se deschide fereastra cu sarcinile angajatului...")
                 self.tasks_win = TasksWindow(self.jwt_token, self.current_user_id)
