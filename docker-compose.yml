@@ -12,6 +12,11 @@ services:
       - "5432:5432"
     volumes:
       - auth_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d auth_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   auth-service:
     container_name: auth-service
@@ -20,14 +25,21 @@ services:
     ports:
       - "8081:8080"
     depends_on:
-      - auth-db
+      auth-db:
+        condition: service_healthy
     environment:
       DB_HOST: auth-db
       DB_PORT: 5432
       DB_NAME: auth_db
       DB_USER: admin
       DB_PASSWORD: parola_secreta
-      
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
   calendar-db:
     image: postgres:13-alpine
     container_name: calendar-db
@@ -39,7 +51,12 @@ services:
       - "5433:5432"
     volumes:
       - calendar_db_data:/var/lib/postgresql/data
-      
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d calendar_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   calendar-service:
     container_name: calendar-service
     build:
@@ -47,25 +64,37 @@ services:
     ports:
       - "8082:8080"
     depends_on:
-      - calendar-db
+      calendar-db:
+        condition: service_healthy
     environment:
       DB_HOST: calendar-db
       DB_PORT: 5432
       DB_NAME: calendar_db
       DB_USER: admin
       DB_PASSWORD: parola_secreta
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
       
   task-db:
     image: postgres:13-alpine
     container_name: task-db
     environment:
-      POSTGRES_USER: admin 
+      POSTGRES_USER: admin
       POSTGRES_PASSWORD: parola_secreta
       POSTGRES_DB: task_db
     ports:
       - "5434:5432"
     volumes:
       - task_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d task_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
       
   task-service:
     container_name: task-service
@@ -74,14 +103,60 @@ services:
     ports:
       - "8083:8080"
     depends_on:
-      - task-db
+      task-db:
+        condition: service_healthy
     environment:
       DB_HOST: task-db
       DB_PORT: 5432
       DB_NAME: task_db
       DB_USER: admin
       DB_PASSWORD: parola_secreta
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
       
+  messaging-db:
+    image: postgres:13-alpine
+    container_name: messaging-db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: parola_secreta
+      POSTGRES_DB: messaging_db
+    ports:
+      - "5435:5432"
+    volumes:
+      - messaging_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d messaging_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  
+  messaging-service:
+    container_name: messaging-service
+    build:
+      context: ./services/MessagingMicroservice
+    ports:
+      - "8084:8080"
+    depends_on:
+      messaging-db:
+        condition: service_healthy
+    environment:
+      DB_HOST: messaging-db
+      DB_PORT: 5432
+      DB_NAME: messaging_db
+      DB_USER: admin
+      DB_PASSWORD: parola_secreta
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
   gateway-service:
     container_name: gateway-service
     build:
@@ -89,10 +164,17 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - auth-service 
-      - calendar-service 
+      auth-service:
+        condition: service_healthy
+      calendar-service:
+        condition: service_healthy
+      task-service:
+        condition: service_healthy
+      messaging-service:
+        condition: service_healthy
 
 volumes:
   auth_db_data:
   calendar_db_data:
   task_db_data:
+  messaging_db_data:

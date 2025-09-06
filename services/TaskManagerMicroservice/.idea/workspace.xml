@@ -5,18 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ed6a071d-25d2-474b-89da-5711aa8f48b4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../../client/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../client/main_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/main_window.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MessagingMicroservice/src/main/kotlin/com/sd/laborator/MessagingMicroserviceApplication.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../../docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AuthentificationMicroservice/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../AuthentificationMicroservice/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AuthentificationMicroservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../AuthentificationMicroservice/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AuthentificationMicroservice/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../AuthentificationMicroservice/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CalendarMicroservice/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../CalendarMicroservice/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CalendarMicroservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../CalendarMicroservice/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CalendarMicroservice/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../CalendarMicroservice/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MessagingMicroservice/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MessagingMicroservice/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MessagingMicroservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MessagingMicroservice/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MessagingMicroservice/src/main/kotlin/com/sd/laborator/Hello.kt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../PlanningMicroservice/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../PlanningMicroservice/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PlanningMicroservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../PlanningMicroservice/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../PlanningMicroservice/src/main/kotlin/com/sd/laborator/config/GatewayConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../PlanningMicroservice/src/main/kotlin/com/sd/laborator/config/GatewayConfig.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../PlanningMicroservice/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../PlanningMicroservice/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../StatisticsMicroservice/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../StatisticsMicroservice/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/Hello.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +100,9 @@
       <workItem from="1756833428276" duration="1113000" />
       <workItem from="1756898658249" duration="699000" />
       <workItem from="1756899999592" duration="584000" />
-      <workItem from="1756914588998" duration="1958000" />
+      <workItem from="1756914588998" duration="5006000" />
+      <workItem from="1757083821706" duration="2293000" />
+      <workItem from="1757150177367" duration="751000" />
     </task>
     <servers />
   </component>

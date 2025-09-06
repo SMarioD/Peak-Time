@@ -4,6 +4,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends curl
 
 WORKDIR /app
 
-COPY target/AuthentificationMicroservice-1.0-SNAPSHOT.jar app.jar
+COPY target/MessagingMicroservice-1.0-SNAPSHOT.jar app.jar
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar","app.jar"]
