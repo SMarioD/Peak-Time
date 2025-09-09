@@ -1,34 +1,43 @@
 package com.sd.laborator.controller
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.sd.laborator.model.Message
 import com.sd.laborator.model.SendMessageRequest
+import com.sd.laborator.service.KafkaProducerService
 import com.sd.laborator.service.MessageService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.time.LocalDateTime
 
 @RestController
 @RequestMapping("/api/v1/messages")
-class MessageController( private val messageService: MessageService) {
+class MessageController(private val messageService: MessageService,
+                        private val kafkaProducerService: KafkaProducerService)
+{
+    private val objectMapper = jacksonObjectMapper()
 
     @PostMapping
     fun sendMessage(@RequestHeader("X-User-Id") senderId: Int, @RequestBody request: SendMessageRequest): ResponseEntity<Any> {
-        return try {
-            val message = messageService.sendMessage(senderId, request)
-            ResponseEntity(message, HttpStatus.CREATED)
-        } catch (e: Exception)
-        {
-            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mapOf("error" to "Eroare la trimiterea mesajului: ${e.message}"))
-        }
+        val messageObject = Message(
+            senderId = senderId,
+            receiverId = request.receiverId,
+            continut = request.continut,
+            timestamp = LocalDateTime.now()
+        )
+        val messageJson = objectMapper.writeValueAsString(messageObject)
+
+        kafkaProducerService.sendMessage("chat_messages", messageJson)
+
+        return ResponseEntity.accepted().body(mapOf("status" to "Mesaj trimis spre procesare."))
     }
 
     @GetMapping("/{partnerId}")
-    fun getConversation(@RequestHeader("X-User-Id") userId: Int, @PathVariable partnerId: Int):ResponseEntity<Any>
-    {
+    fun getConversation(@RequestHeader("X-User-Id") userId: Int, @PathVariable partnerId: Int): ResponseEntity<Any> {
         return try {
             val conversation = messageService.getConversation(userId, partnerId)
             ResponseEntity.ok(conversation)
-        } catch (e: Exception)
-        {
+        } catch (e: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mapOf("error" to "Eroare la preluarea conversatiei: ${e.message}"))
         }
     }

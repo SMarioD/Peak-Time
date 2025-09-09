@@ -7,6 +7,7 @@ from new_event_dialog import NewEventDialog
 from new_connection_dialog import NewConnectionDialog
 from tasks_window import TasksWindow
 from team_management_window import TeamManagementWindow
+from chat_window import ChatWindow
 
 
 class MainWindow(QWidget):
@@ -17,6 +18,7 @@ class MainWindow(QWidget):
         self.current_user_role = user_role
         self.tasks_win = None
         self.team_management_win = None
+        self.chat_windows = {}
         self.events_data = []
         self.setWindowTitle("Peak Time - Panou Principal")
         self.setGeometry(100, 100, 800, 600)
@@ -102,6 +104,24 @@ class MainWindow(QWidget):
                 self.handle_update_connection(connection_data.get('id'), 'acceptat')
             elif reply == QMessageBox.No:
                 self.handle_update_connection(connection_data.get('id'),'respins')
+        elif connection_data.get('status') == 'acceptat':
+            partner_id = connection_data.get('utilizator1Id') if connection_data.get('utilizator2Id') == current_user_id else connection_data.get('utilizator2Id')
+            if partner_id in self.chat_windows and self.chat_windows[partner_id].isVisible():
+                self.chat_windows[partner_id].activateWindow()
+                return
+            details_url = "http://localhost:8080/api/v1/auth/users/details"
+            headers = {"Authorization": f"Bearer {self.jwt_token}"}
+            try:
+                details_response = requests.post(details_url, headers=headers, json=[partner_id])
+                if details_response.status_code == 200:
+                    partner_details = details_response.json()[0]
+                    chat_win = ChatWindow(self.jwt_token, self.current_user_id, partner_details)
+                    self.chat_windows[partner_id] = chat_win
+                    chat_win.show()
+                else:
+                    QMessageBox.critical(self, "Eroare", "Nu s-au putut prelua detaliile partenerului.")
+            except requests.exceptions.RequestException as e:
+                QMessageBox.critical(self, "Eroare de Conexiune", str(e))
 
     def show_menu(self):
         context_menu=QMenu(self)

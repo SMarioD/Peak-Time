@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   auth-db:
     image: postgres:13-alpine
@@ -35,9 +33,9 @@ services:
       DB_PASSWORD: parola_secreta
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+      interval: 10s
+      timeout: 5s
+      retries: 5
       start_period: 30s
 
   calendar-db:
@@ -74,16 +72,16 @@ services:
       DB_PASSWORD: parola_secreta
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+      interval: 10s
+      timeout: 5s
+      retries: 5
       start_period: 30s
       
   task-db:
     image: postgres:13-alpine
     container_name: task-db
     environment:
-      POSTGRES_USER: admin
+      POSTGRES_USER: admin 
       POSTGRES_PASSWORD: parola_secreta
       POSTGRES_DB: task_db
     ports:
@@ -113,9 +111,9 @@ services:
       DB_PASSWORD: parola_secreta
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+      interval: 10s
+      timeout: 5s
+      retries: 5
       start_period: 30s
       
   messaging-db:
@@ -134,6 +132,27 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+      
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.0.1
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  kafka:
+    image: confluentinc/cp-kafka:7.0.1
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
   
   messaging-service:
     container_name: messaging-service
@@ -144,6 +163,8 @@ services:
     depends_on:
       messaging-db:
         condition: service_healthy
+      kafka:
+        condition: service_started
     environment:
       DB_HOST: messaging-db
       DB_PORT: 5432
@@ -152,9 +173,9 @@ services:
       DB_PASSWORD: parola_secreta
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+      interval: 10s
+      timeout: 5s
+      retries: 5
       start_period: 30s
 
   gateway-service:
