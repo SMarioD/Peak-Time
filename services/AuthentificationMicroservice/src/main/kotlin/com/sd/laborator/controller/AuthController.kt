@@ -8,6 +8,7 @@ import com.sd.laborator.model.UserResponse
 import com.sd.laborator.service.AuthService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -104,6 +105,17 @@ class AuthController (private val authService: AuthService) {
             ResponseEntity.ok(response)
         } catch (e: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mapOf("error" to "Nu s-au putut prelua detaliile utilizatorilor."))
+        }
+    }
+
+    @GetMapping("/users/search")
+    fun searchUserByEmail(@RequestParam email: String): ResponseEntity<Any> {
+        return try {
+            val user = authService.findUserByEmail(email)
+            val response = UserResponse(id = user.id, email = user.email, nume = user.nume, prenume = user.prenume)
+            ResponseEntity.ok(response)
+        } catch (e: IllegalArgumentException) {
+            ResponseEntity.status(HttpStatus.NOT_FOUND).body(mapOf("error" to e.message))
         }
     }
 }

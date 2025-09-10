@@ -81,4 +81,8 @@ class AuthService(private val userRepository:UserRepository, private val connect
 
         throw IllegalArgumentException("Status invalid: $newStatus")
     }
+    fun findUserByEmail(email: String): User {
+        return userRepository.findByEmail(email)
+            ?: throw IllegalArgumentException("Utilizatorul cu emailul $email nu a fost gasit.")
+    }
 }

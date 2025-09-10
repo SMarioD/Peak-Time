@@ -1,5 +1,6 @@
 package com.sd.laborator.controller
 
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.sd.laborator.model.Message
 import com.sd.laborator.model.SendMessageRequest
@@ -15,7 +16,7 @@ import java.time.LocalDateTime
 class MessageController(private val messageService: MessageService,
                         private val kafkaProducerService: KafkaProducerService)
 {
-    private val objectMapper = jacksonObjectMapper()
+    private val objectMapper = jacksonObjectMapper().findAndRegisterModules()
 
     @PostMapping
     fun sendMessage(@RequestHeader("X-User-Id") senderId: Int, @RequestBody request: SendMessageRequest): ResponseEntity<Any> {

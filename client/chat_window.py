@@ -65,22 +65,23 @@ class ChatWindow(QWidget):
                 self.conversation_view.setText(f"Eroare de conexiune: {e}")
 
     def send_message(self):
-        message_text = self.message_input.text()
+        message_text = self.message_input.text().strip()
         if not message_text:
             return
+
         send_url = "http://localhost:8080/api/v1/messages"
         headers = {"Authorization": f"Bearer {self.jwt_token}"}
         payload = {
             "receiverId": self.partner_id,
             "continut": message_text
         }
+
         try:
             response = requests.post(send_url, headers=headers, json=payload)
-            if response.status_code == 201:
+            if response.status_code == 202:
                 self.message_input.clear()
-                self.load_conversation()
             else:
-                QMessageBox.critical(self, "Eroare", f"Mesajul nu a putut fi trimis: {response.text}")
+                QMessageBox.critical(self, "Eroare la Trimitere", f"Serverul a răspuns cu o eroare: {response.text}")
         except requests.exceptions.RequestException as e:
             QMessageBox.critical(self, "Eroare de Conexiune", str(e))
 

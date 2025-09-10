@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 @Service
 class KafkaConsumerService(private val messageRepository: MessageRepository) {
 
-    private val objectMapper =jacksonObjectMapper()
+    private val objectMapper = jacksonObjectMapper().findAndRegisterModules()
 
     @KafkaListener(topics=["chat_messages"],groupId= "messaging_group")
     fun listen(message:String)

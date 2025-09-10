@@ -8,6 +8,7 @@ from new_connection_dialog import NewConnectionDialog
 from tasks_window import TasksWindow
 from team_management_window import TeamManagementWindow
 from chat_window import ChatWindow
+from send_message_dialog import SendMessageDialog
 
 
 class MainWindow(QWidget):
@@ -165,6 +166,8 @@ class MainWindow(QWidget):
                 print("Se deschide fereastra cu sarcinile angajatului...")
                 self.tasks_win = TasksWindow(self.jwt_token, self.current_user_id)
                 self.tasks_win.show()
+            elif selected_action == send_message_action:
+                self.handle_send_message()
             elif selected_action == logout_action:
                 print("Utilizatorul dorește să se delogheze.")
 
@@ -227,6 +230,21 @@ class MainWindow(QWidget):
                 QMessageBox.critical(self, "Eroare", "Nu s-a putut actualiza statusul conexiunii.")
         except requests.exceptions.RequestException as e:
             QMessageBox.critical(self, "Eroare de Conexiune", str(e))
+
+    def handle_send_message(self):
+        dialog = SendMessageDialog(self.jwt_token, self.current_user_id, self)
+        if dialog.exec_() == QDialog.Accepted:
+            selected_user = dialog.get_selected_user()
+            if selected_user:
+                partner_id = selected_user.get('id')
+
+                if partner_id in self.chat_windows and self.chat_windows[partner_id].isVisible():
+                    self.chat_windows[partner_id].activateWindow()
+                    return
+
+                chat_win = ChatWindow(self.jwt_token, self.current_user_id, selected_user)
+                self.chat_windows[partner_id] = chat_win
+                chat_win.show()
 
     def load_calendar_events(self):
         print("Încercare de a încărca evenimentele din calendar...")

@@ -5,17 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8951b3be-d233-4116-b101-f2699e2aaed2" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../../client/chat_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/chat_window.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../client/main_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/main_window.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../../docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AuthentificationMicroservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../AuthentificationMicroservice/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AuthentificationMicroservice/src/main/kotlin/com/sd/laborator/controller/AuthController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../AuthentificationMicroservice/src/main/kotlin/com/sd/laborator/controller/AuthController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AuthentificationMicroservice/src/main/kotlin/com/sd/laborator/service/AuthService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../AuthentificationMicroservice/src/main/kotlin/com/sd/laborator/service/AuthService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CalendarMicroservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../CalendarMicroservice/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/controller/MessageController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/controller/MessageController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/service/MessageService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/service/MessageService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PlanningMicroservice/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../PlanningMicroservice/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PlanningMicroservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../PlanningMicroservice/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PlanningMicroservice/src/main/kotlin/com/sd/laborator/PlanningMicroserviceApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../PlanningMicroservice/src/main/kotlin/com/sd/laborator/PlanningMicroserviceApplication.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/service/KafkaConsumerService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/service/KafkaConsumerService.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../TaskManagerMicroservice/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../TaskManagerMicroservice/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TaskManagerMicroservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../TaskManagerMicroservice/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,7 +91,8 @@
       <workItem from="1756899880634" duration="22000" />
       <workItem from="1756914446438" duration="7000" />
       <workItem from="1757142045657" duration="7369000" />
-      <workItem from="1757410082744" duration="1433000" />
+      <workItem from="1757410082744" duration="6387000" />
+      <workItem from="1757481615140" duration="1469000" />
     </task>
     <servers />
   </component>
