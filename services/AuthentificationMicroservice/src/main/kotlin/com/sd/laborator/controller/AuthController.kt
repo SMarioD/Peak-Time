@@ -84,8 +84,6 @@ class AuthController (private val authService: AuthService) {
 
     @PutMapping("/connections/{id}")
     fun updateConnection(@PathVariable id: Int, @RequestBody statusUpdate: Map<String, String>): ResponseEntity<Any> {
-        // TODO: Verificam daca utilizatorul curent este destinatarul acestei cereri
-
         return try {
             val newStatus = statusUpdate["status"] ?: throw IllegalArgumentException("Statusul este obligatoriu.")
             val updatedConnection = authService.updateConnectionStatus(id, newStatus)

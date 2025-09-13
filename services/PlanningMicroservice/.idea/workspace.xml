@@ -5,12 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="745888c1-97b2-4c6a-851b-914f02e8af2e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../../client/main_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/main_window.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../../docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../client/chat_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/chat_window.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../client/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AuthentificationMicroservice/src/main/kotlin/com/sd/laborator/controller/AuthController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../AuthentificationMicroservice/src/main/kotlin/com/sd/laborator/controller/AuthController.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MessagingMicroservice/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MessagingMicroservice/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MessagingMicroservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MessagingMicroservice/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MessagingMicroservice/src/main/kotlin/com/sd/laborator/service/KafkaConsumerService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MessagingMicroservice/src/main/kotlin/com/sd/laborator/service/KafkaConsumerService.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/PlanningMicroserviceApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/PlanningMicroserviceApplication.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/config/GatewayConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/config/GatewayConfig.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../TaskManagerMicroservice/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../TaskManagerMicroservice/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -49,7 +52,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/mario/Local_Disk_Storage/Licenta/Project/services/MessagingMicroservice",
+    "last_opened_file_path": "/home/mario/Local_Disk_Storage/Licenta/Project/services/PlanningMicroservice",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -98,6 +101,11 @@
       <workItem from="1757144959989" duration="2076000" />
       <workItem from="1757249731057" duration="1733000" />
       <workItem from="1757409869568" duration="212000" />
+      <workItem from="1757489265771" duration="3416000" />
+      <workItem from="1757605306478" duration="69000" />
+      <workItem from="1757677946949" duration="607000" />
+      <workItem from="1757745853540" duration="10000" />
+      <workItem from="1757747908603" duration="1543000" />
     </task>
     <servers />
   </component>

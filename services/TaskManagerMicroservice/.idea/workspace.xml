@@ -6,17 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="ed6a071d-25d2-474b-89da-5711aa8f48b4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../../client/chat_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/chat_window.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../client/main_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/main_window.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AuthentificationMicroservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../AuthentificationMicroservice/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../AuthentificationMicroservice/src/main/kotlin/com/sd/laborator/controller/AuthController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../AuthentificationMicroservice/src/main/kotlin/com/sd/laborator/controller/AuthController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AuthentificationMicroservice/src/main/kotlin/com/sd/laborator/service/AuthService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../AuthentificationMicroservice/src/main/kotlin/com/sd/laborator/service/AuthService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CalendarMicroservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../CalendarMicroservice/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MessagingMicroservice/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MessagingMicroservice/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MessagingMicroservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MessagingMicroservice/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MessagingMicroservice/src/main/kotlin/com/sd/laborator/controller/MessageController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MessagingMicroservice/src/main/kotlin/com/sd/laborator/controller/MessageController.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MessagingMicroservice/src/main/kotlin/com/sd/laborator/service/KafkaConsumerService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MessagingMicroservice/src/main/kotlin/com/sd/laborator/service/KafkaConsumerService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PlanningMicroservice/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../PlanningMicroservice/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PlanningMicroservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../PlanningMicroservice/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PlanningMicroservice/src/main/kotlin/com/sd/laborator/config/GatewayConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../PlanningMicroservice/src/main/kotlin/com/sd/laborator/config/GatewayConfig.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +52,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/mario/Local_Disk_Storage/Licenta/Project/services/MessagingMicroservice",
+    "last_opened_file_path": "/home/mario/Local_Disk_Storage/Licenta/Project/services/PlanningMicroservice",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -99,7 +96,9 @@
       <workItem from="1757083821706" duration="2293000" />
       <workItem from="1757150177367" duration="2022000" />
       <workItem from="1757415523507" duration="2291000" />
-      <workItem from="1757481609918" duration="1455000" />
+      <workItem from="1757481609918" duration="2763000" />
+      <workItem from="1757605376195" duration="48000" />
+      <workItem from="1757677928096" duration="652000" />
     </task>
     <servers />
   </component>

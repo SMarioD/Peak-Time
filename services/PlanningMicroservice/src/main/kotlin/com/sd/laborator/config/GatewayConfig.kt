@@ -32,14 +32,19 @@ open class GatewayConfig {
                         f.filter(authFilter.apply(AuthenticationFilter.Config()))
                     }
                     .uri("http://task-service:8080")
-            }.
-            route("messaging-service-route") { r ->
+            }
+            .route("messaging-service-route") { r ->
                 r.path("/api/v1/messages/**")
                     .filters { f ->
                         f.filter(authFilter.apply(AuthenticationFilter.Config()))
                     }
                     .uri("http://messaging-service:8080")
             }
+            .route("messaging-service-websocket-route") { r ->
+                r.path("/ws/**")
+                    .uri("ws://messaging-service:8080")
+            }
+
             .build()
     }
 }
