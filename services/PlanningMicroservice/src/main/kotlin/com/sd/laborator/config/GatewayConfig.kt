@@ -44,6 +44,13 @@ open class GatewayConfig {
                 r.path("/ws/**")
                     .uri("ws://messaging-service:8080")
             }
+            .route("planshare-service-route") { r ->
+                r.path("/api/v1/share/**")
+                    .filters { f ->
+                        f.filter(authFilter.apply(AuthenticationFilter.Config()))
+                    }
+                    .uri("http://planshare-service:8080")
+            }
 
             .build()
     }

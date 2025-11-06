@@ -9,6 +9,8 @@ from tasks_window import TasksWindow
 from team_management_window import TeamManagementWindow
 from chat_window import ChatWindow
 from send_message_dialog import SendMessageDialog
+from share_plan_dialog import SharePlanDialog
+from shared_plans_window import SharedPlansWindow
 
 
 class MainWindow(QWidget):
@@ -21,6 +23,7 @@ class MainWindow(QWidget):
         self.team_management_win = None
         self.chat_windows = {}
         self.events_data = []
+        self.shared_plans_win = None
         self.setWindowTitle("Peak Time - Panou Principal")
         self.setGeometry(100, 100, 800, 600)
         self.initUI()
@@ -132,6 +135,7 @@ class MainWindow(QWidget):
         sync_calendar_action = context_menu.addAction("Sincronizează calendarul")
         share_plans_action = context_menu.addAction("Partajează planuri")
         send_message_action = context_menu.addAction("Trimite mesaj")
+        shared_plans_action = context_menu.addAction("Calendare Partajate")
 
         manage_team_action = None
         statistics_action = None
@@ -166,6 +170,8 @@ class MainWindow(QWidget):
                 print("Se deschide fereastra cu sarcinile angajatului...")
                 self.tasks_win = TasksWindow(self.jwt_token, self.current_user_id)
                 self.tasks_win.show()
+            elif selected_action == shared_plans_action:
+                self.handle_show_shared_plans()
             elif selected_action == send_message_action:
                 self.handle_send_message()
             elif selected_action == logout_action:
@@ -246,6 +252,30 @@ class MainWindow(QWidget):
                 self.chat_windows[partner_id] = chat_win
                 chat_win.show()
 
+    def handle_share_plan(self):
+        dialog = SharePlanDialog(self.jwt_token, self.current_user_id, self)
+        if dialog.exec_() == QDialog.Accepted:
+            payload = dialog.get_data()
+            if not payload:
+                QMessageBox.warning(self, "Eroare", "Trebuie să selectezi un utilizator.")
+                return
+
+            share_url = "http://localhost:8080/api/v1/share"
+            headers = {"Authorization": f"Bearer {self.jwt_token}", "Content-Type": "application/json"}
+
+            try:
+                response = requests.post(share_url, headers=headers, json=payload)
+                if response.status_code == 200:
+                    QMessageBox.information(self, "Succes", "Planul a fost partajat.")
+                else:
+                    QMessageBox.critical(self, "Eroare", f"Nu s-a putut partaja planul: {response.text}")
+            except requests.exceptions.RequestException as e:
+                QMessageBox.critical(self, "Eroare de Conexiune", str(e))
+
+    def handle_show_shared_plans(self):
+        self.shared_plans_win = SharedPlansWindow(self.jwt_token, self.current_user_id)
+        self.shared_plans_win.show()
+
     def load_calendar_events(self):
         print("Încercare de a încărca evenimentele din calendar...")
 
@@ -315,3 +345,16 @@ class MainWindow(QWidget):
         except requests.exceptions.RequestException as e:
             self.connections_list_widget.clear()
             self.connections_list_widget.addItem("Eroare de conexiune.")
+
+    def load_shared_plans(self):
+        shared_url = "http://localhost:8080/api/v1/calendar/shares"
+        headers = {"Authorization": f"Bearer {self.jwt_token}"}
+        try:
+            response = requests.get(shared_url, headers=headers)
+            if response.status_code == 200:
+                shared_plans = response.json()
+                print("Planuri partajate primite:", shared_plans)
+            else:
+                print("Eroare la încărcarea planurilor partajate.")
+        except requests.exceptions.RequestException as e:
+            print(f"Eroare de conexiune la încărcarea planurilor: {e}")

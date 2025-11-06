@@ -4,6 +4,6 @@ RUN apk add --no-cache curl
 
 WORKDIR /app
 
-COPY target/TaskManagerMicroservice-1.0-SNAPSHOT.jar app.jar
+COPY target/PlanShareMicroservice-1.0-SNAPSHOT.jar app.jar
 
 ENTRYPOINT ["java", "-jar", "app.jar"]

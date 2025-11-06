@@ -1,6 +1,6 @@
-FROM openjdk:11-jre-slim
+FROM eclipse-temurin:11-jre-alpine
 
-RUN apt-get update && apt-get install -y --no-install-recommends curl
+RUN apk add --no-cache curl
 
 WORKDIR /app
 

@@ -5,16 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="90dbb75c-2b92-4bd1-b733-6dbfee807c13" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../../client/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../client/shared_plans_window.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CalendarMicroservice/src/main/kotlin/com/sd/laborator/model/CalendarShare.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CalendarMicroservice/src/main/kotlin/com/sd/laborator/repository/CalendarShareRepository.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PlanShareMicroservice/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PlanShareMicroservice/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PlanShareMicroservice/src/test/kotlin/com/sd/laborator/HelloTest.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../client/main_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/main_window.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../../docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AuthentificationMicroservice/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../AuthentificationMicroservice/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CalendarMicroservice/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../CalendarMicroservice/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CalendarMicroservice/src/main/kotlin/com/sd/laborator/controller/CalendarController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../CalendarMicroservice/src/main/kotlin/com/sd/laborator/controller/CalendarController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CalendarMicroservice/src/main/kotlin/com/sd/laborator/service/CalendarService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../CalendarMicroservice/src/main/kotlin/com/sd/laborator/service/CalendarService.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MessagingMicroservice/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MessagingMicroservice/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MessagingMicroservice/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../MessagingMicroservice/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../PlanningMicroservice/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../PlanningMicroservice/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PlanningMicroservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../PlanningMicroservice/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PlanningMicroservice/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../PlanningMicroservice/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../PlanningMicroservice/src/main/kotlin/com/sd/laborator/config/GatewayConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../PlanningMicroservice/src/main/kotlin/com/sd/laborator/config/GatewayConfig.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../TaskManagerMicroservice/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../TaskManagerMicroservice/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TaskManagerMicroservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../TaskManagerMicroservice/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TaskManagerMicroservice/src/main/kotlin/com/sd/laborator/Hello.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TaskManagerMicroservice/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../TaskManagerMicroservice/Dockerfile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +33,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="2" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4
@@ -41,7 +54,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/mario/Local_Disk_Storage/Licenta/Project/services/TaskManagerMicroservice",
+    "last_opened_file_path": "/home/mario/Local_Disk_Storage/Licenta/Project/services/StatisticsMicroservice",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -53,8 +66,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131" />
-        <option value="bundled-js-predefined-d6986cc7102b-b598e85cdad2-JavaScript-IU-252.25557.131" />
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.27397.103" />
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.27397.103" />
       </set>
     </attachedChunks>
   </component>
@@ -68,6 +81,7 @@
       <workItem from="1754213325231" duration="1314000" />
       <workItem from="1754373270709" duration="170000" />
       <workItem from="1756899924308" duration="74000" />
+      <workItem from="1762458200998" duration="1226000" />
     </task>
     <servers />
   </component>
