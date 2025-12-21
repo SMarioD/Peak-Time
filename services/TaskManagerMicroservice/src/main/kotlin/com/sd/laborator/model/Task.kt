@@ -1,16 +1,20 @@
 package com.sd.laborator.model
+
 import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
 @Table(name="sarcini")
-data class Task (
+data class Task(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Int = 0,
 
     @Column(name = "atribuit_lui_id", nullable = false)
     var atribuitLuiId: Int,
+
+    @Column(name = "creat_de_id", nullable = false)
+    var creatDeId: Int,
 
     @Column(name = "titlu", nullable = false)
     var titlu: String,

@@ -51,7 +51,20 @@ open class GatewayConfig {
                     }
                     .uri("http://planshare-service:8080")
             }
-
+            .route("synchronize-service-route") { r ->
+                r.path("/api/v1/sync/**")
+                    .filters { f ->
+                        f.filter(authFilter.apply(AuthenticationFilter.Config()))
+                    }
+                    .uri("http://synchronize-service:8080")
+            }
+            .route("statistics-service-route") { r ->
+                r.path("/api/v1/statistics/**")
+                    .filters { f ->
+                        f.filter(authFilter.apply(AuthenticationFilter.Config()))
+                    }
+                    .uri("http://statistics-service:8080")
+            }
             .build()
     }
 }

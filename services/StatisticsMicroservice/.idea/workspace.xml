@@ -5,31 +5,38 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="90dbb75c-2b92-4bd1-b733-6dbfee807c13" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../../client/shared_plans_window.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../CalendarMicroservice/src/main/kotlin/com/sd/laborator/model/CalendarShare.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../CalendarMicroservice/src/main/kotlin/com/sd/laborator/repository/CalendarShareRepository.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../PlanShareMicroservice/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../PlanShareMicroservice/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../PlanShareMicroservice/src/test/kotlin/com/sd/laborator/HelloTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../client/main_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/main_window.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/controller/StatisticsController.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SynchronizeMicroservice/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SynchronizeMicroservice/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SynchronizeMicroservice/src/test/kotlin/com/sd/laborator/HelloTest.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../../docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AuthentificationMicroservice/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../AuthentificationMicroservice/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CalendarMicroservice/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../CalendarMicroservice/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CalendarMicroservice/src/main/kotlin/com/sd/laborator/controller/CalendarController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../CalendarMicroservice/src/main/kotlin/com/sd/laborator/controller/CalendarController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CalendarMicroservice/src/main/kotlin/com/sd/laborator/service/CalendarService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../CalendarMicroservice/src/main/kotlin/com/sd/laborator/service/CalendarService.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MessagingMicroservice/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MessagingMicroservice/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MessagingMicroservice/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../MessagingMicroservice/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MessagingMicroservice/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../MessagingMicroservice/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../PlanningMicroservice/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../PlanningMicroservice/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PlanningMicroservice/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../PlanningMicroservice/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../PlanningMicroservice/src/main/kotlin/com/sd/laborator/config/GatewayConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../PlanningMicroservice/src/main/kotlin/com/sd/laborator/config/GatewayConfig.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/kotlinc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/Hello.kt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../TaskManagerMicroservice/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../TaskManagerMicroservice/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TaskManagerMicroservice/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../TaskManagerMicroservice/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TaskManagerMicroservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../TaskManagerMicroservice/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TaskManagerMicroservice/src/main/kotlin/com/sd/laborator/controller/TaskController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../TaskManagerMicroservice/src/main/kotlin/com/sd/laborator/controller/TaskController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TaskManagerMicroservice/src/main/kotlin/com/sd/laborator/model/Task.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../TaskManagerMicroservice/src/main/kotlin/com/sd/laborator/model/Task.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TaskManagerMicroservice/src/main/kotlin/com/sd/laborator/service/TaskService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../TaskManagerMicroservice/src/main/kotlin/com/sd/laborator/service/TaskService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TaskManagerMicroservice/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../TaskManagerMicroservice/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Kotlin File" />
+        <option value="Kotlin Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
@@ -48,13 +55,20 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
+    "Maven.StatisticsMicroservice [clean].executor": "Run",
+    "Maven.StatisticsMicroservice [compile].executor": "Run",
+    "Maven.StatisticsMicroservice [package].executor": "Run",
+    "Maven.StatisticsMicroservice [validate].executor": "Run",
+    "Maven.SynchronizeMicroservice [clean].executor": "Run",
+    "Maven.SynchronizeMicroservice [compile].executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/mario/Local_Disk_Storage/Licenta/Project/services/StatisticsMicroservice",
+    "last_opened_file_path": "/home/mario/Local_Disk_Storage/Licenta/Project/services/SynchronizeMicroservice",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -63,11 +77,33 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="com.sd.laborator.config" />
+      <recent name="com.sd.laborator.service" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.SynchronizeMicroserviceApplication">
+    <configuration name="StatisticsMicroserviceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="StatisticsMicroservice" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.sd.laborator.StatisticsMicroserviceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SynchronizeMicroserviceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="StatisticsMicroservice" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.sd.laborator.SynchronizeMicroserviceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.27397.103" />
-        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.27397.103" />
+        <option value="bundled-jdk-30f59d01ecdd-cffe25b9f5b3-intellij.indexing.shared.core-IU-253.28294.334" />
+        <option value="bundled-js-predefined-d6986cc7102b-c7e53b3be11b-JavaScript-IU-253.28294.334" />
       </set>
     </attachedChunks>
   </component>
@@ -82,6 +118,8 @@
       <workItem from="1754373270709" duration="170000" />
       <workItem from="1756899924308" duration="74000" />
       <workItem from="1762458200998" duration="1226000" />
+      <workItem from="1763128145735" duration="1397000" />
+      <workItem from="1765722274226" duration="21934000" />
     </task>
     <servers />
   </component>

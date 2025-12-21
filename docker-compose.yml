@@ -94,29 +94,6 @@ services:
       timeout: 5s
       retries: 5
       
-  task-service:
-    container_name: task-service
-    build:
-      context: ./services/TaskManagerMicroservice 
-    ports:
-      - "8083:8080"
-    depends_on:
-      task-db:
-        condition: service_healthy
-    environment:
-      DB_HOST: task-db
-      DB_PORT: 5432
-      DB_NAME: task_db
-      DB_USER: admin
-      DB_PASSWORD: parola_secreta
-      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 30s
-      
   messaging-db:
     image: postgres:13-alpine
     container_name: messaging-db
@@ -133,16 +110,33 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  statistics-db:
+    image: postgres:13-alpine
+    container_name: statistics-db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: parola_secreta
+      POSTGRES_DB: statistics_db
+    ports:
+      - "5436:5432"
+    volumes:
+      - statistics_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d statistics_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
       
   zookeeper:
-    image: confluentinc/cp-zookeeper:7.0.1
+    image: confluentinc/cp-zookeeper:5.5.1
     container_name: zookeeper
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
 
   kafka:
-    image: confluentinc/cp-kafka:7.0.1
+    image: confluentinc/cp-kafka:5.5.1
     container_name: kafka
     ports:
       - "9092:9092"
@@ -158,10 +152,35 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
     healthcheck:
-      test: ["CMD-SHELL", "kafka-topics --bootstrap-server localhost:9092 --list"]
+      test: ["CMD-SHELL", "kafka-topics --bootstrap-server localhost:9092 --list || exit 0"]
       interval: 15s
       timeout: 10s
       retries: 10
+  
+  task-service:
+    container_name: task-service
+    build:
+      context: ./services/TaskManagerMicroservice 
+    ports:
+      - "8083:8080"
+    depends_on:
+      task-db:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    environment:
+      DB_HOST: task-db
+      DB_PORT: 5432
+      DB_NAME: task_db
+      DB_USER: admin
+      DB_PASSWORD: parola_secreta
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
   messaging-service:
     container_name: messaging-service
@@ -187,7 +206,66 @@ services:
       timeout: 5s
       retries: 5
       start_period: 30s
+      
+  statistics-service:
+    container_name: statistics-service
+    build:
+      context: ./services/StatisticsMicroservice
+    ports:
+      - "8085:8080"
+    depends_on:
+      statistics-db:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    environment:
+      DB_HOST: statistics-db
+      DB_PORT: 5432
+      DB_NAME: statistics_db
+      DB_USER: admin
+      DB_PASSWORD: parola_secreta
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+      
+  planshare-service:
+    container_name: planshare-service
+    build: 
+      context: ./services/PlanShareMicroservice
+    ports:
+      - "8086:8080"
+    depends_on: 
+      calendar-service:
+        condition: service_healthy
+      auth-service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
 
+  synchronize-service:
+    container_name: synchronize-service
+    build: 
+      context: ./services/SynchronizeMicroservice
+    ports:
+      - "8087:8080"
+    depends_on: 
+      calendar-service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+      
   gateway-service:
     container_name: gateway-service
     build:
@@ -205,29 +283,14 @@ services:
         condition: service_healthy
       planshare-service: 
         condition: service_healthy
-
-  planshare-service:
-    container_name: planshare-service
-    build: 
-      context: ./services/PlanShareMicroservice
-    ports:
-      - "8086:8080"
-    depends_on: 
-      calendar-service:
+      synchronize-service:
         condition: service_healthy
-      auth-service:
+      statistics-service:
         condition: service_healthy
-    environment:
-      SPRING_PROFILES_ACTIVE: docker
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 40s
 
 volumes:
   auth_db_data:
   calendar_db_data:
   task_db_data:
   messaging_db_data:
+  statistics_db_data:

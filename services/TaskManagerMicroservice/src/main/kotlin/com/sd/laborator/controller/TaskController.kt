@@ -14,9 +14,10 @@ class TaskController(private val taskService: TaskService) {
     @PostMapping
     fun createTask(@RequestBody request: TaskRequest, @RequestHeader("X-User-Id") creatorId: Int): ResponseEntity<Any> {
         return try {
-            ResponseEntity(taskService.createTask(request), HttpStatus.CREATED)
+            val newTask = taskService.createTask(request, creatorId)
+            ResponseEntity(newTask, HttpStatus.CREATED)
         } catch (e: Exception) {
-            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build()
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mapOf("error" to e.message))
         }
     }
 
@@ -36,8 +37,10 @@ class TaskController(private val taskService: TaskService) {
         @RequestHeader("X-User-Id") userId: Int
     ): ResponseEntity<Any> {
         return try {
-            val updatedTask = taskService.updateTaskStatus(id, request.status)
+            val updatedTask = taskService.updateTaskStatus(id, request.status, userId)
             ResponseEntity.ok(updatedTask)
+        } catch (e: SecurityException) {
+            ResponseEntity.status(HttpStatus.FORBIDDEN).body(mapOf("error" to e.message))
         } catch (e: Exception) {
             ResponseEntity.badRequest().body(mapOf("error" to e.message))
         }
