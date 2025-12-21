@@ -27,8 +27,6 @@ class AuthController (private val authService: AuthService) {
         return try {
             val registeredUser = authService.registerUser(request)
             val response = mapOf(
-                "id" to registeredUser.id,
-                "email" to registeredUser.email,
                 "message" to "Utilizator inregistrat cu succes."
             )
             ResponseEntity(response, HttpStatus.CREATED)

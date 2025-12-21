@@ -49,6 +49,8 @@ class MainWindow(QWidget):
 
         center_layout = QVBoxLayout()
         self.calendar_widget = QCalendarWidget(self)
+        self.calendar_widget.setVerticalHeaderFormat(QCalendarWidget.NoVerticalHeader)
+        self.calendar_widget.setGridVisible(True)
         self.calendar_widget.selectionChanged.connect(self.on_date_selected)
         center_layout.addWidget(self.calendar_widget)
 
