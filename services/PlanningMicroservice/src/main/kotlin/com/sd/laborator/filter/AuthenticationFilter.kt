@@ -16,7 +16,13 @@ class AuthenticationFilter(private val jwtUtil: JwtUtil) : AbstractGatewayFilter
             val request = exchange.request
             val path = request.uri.path
 
-            if (path == "/api/v1/auth/register" || path == "/api/v1/auth/login") {
+            if (path.contains("/api/v1/auth/register") ||
+                path.contains("/api/v1/auth/login") ||
+                path.contains("/oauth2/") ||
+                path.contains("/login/oauth2/") ||
+                path.contains("/google/callback") ||
+                path.contains("/api/v1/external-calendar/google/link") ||
+                path.contains("/api/v1/external-calendar/google/save-token")){
                 return@GatewayFilter chain.filter(exchange)
             }
 

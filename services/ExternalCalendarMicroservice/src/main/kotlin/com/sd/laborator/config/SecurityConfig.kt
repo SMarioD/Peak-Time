@@ -12,9 +12,13 @@ open class SecurityConfig : WebSecurityConfigurerAdapter() {
         http
             .csrf().disable()
             .authorizeRequests()
-            .anyRequest().permitAll()
+            .antMatchers("/**").permitAll()
+            .anyRequest().authenticated()
             .and()
-            .httpBasic().disable()
-            .formLogin().disable()
+            .oauth2Login()
+            .defaultSuccessUrl("/api/v1/external-calendar/google/save-token", true)
+            .and()
+            .logout()
+            .logoutSuccessUrl("/")
     }
 }

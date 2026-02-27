@@ -1,7 +1,9 @@
 import requests
 from PyQt5.QtWidgets import QWidget, QLabel, QMessageBox, QHBoxLayout, QVBoxLayout, QPushButton, QCalendarWidget, QMenu, QDialog, QListWidget, QListWidgetItem
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt,QTimer
 from datetime import datetime
+
+from google_sync_dialog import GoogleSyncDialog
 from new_event_dialog import NewEventDialog
 from new_connection_dialog import NewConnectionDialog
 from tasks_window import TasksWindow
@@ -32,6 +34,9 @@ class MainWindow(QWidget):
         self.initUI()
         self.load_calendar_events()
         self.load_connections()
+        self.refresh_timer = QTimer(self)
+        self.refresh_timer.timeout.connect(self.load_calendar_events)
+        self.refresh_timer.start(60000)
 
     def initUI(self):
         main_layout = QHBoxLayout()
@@ -133,6 +138,7 @@ class MainWindow(QWidget):
         share_plans_action = context_menu.addAction("Partajează planuri")
         send_message_action = context_menu.addAction("Trimite mesaj")
         view_shared_plans_action = context_menu.addAction("Calendare Partajate")
+        sync_google_action = context_menu.addAction("Sincronizează cu Google Calendar")
 
         manage_team_action, statistics_action, manage_tasks_action = None, None, None
 
@@ -160,6 +166,8 @@ class MainWindow(QWidget):
             elif selected_action == manage_tasks_action:
                 self.tasks_win = TasksWindow(self.jwt_token, self.current_user_id)
                 self.tasks_win.show()
+            elif selected_action == sync_google_action:
+                self.handle_sync_with_google()
             elif selected_action == sync_calendar_action: self.handle_sync_calendars()
             elif selected_action == statistics_action: self.handle_show_statistics()
             elif selected_action == view_shared_plans_action: self.handle_show_shared_plans()
@@ -344,3 +352,7 @@ class MainWindow(QWidget):
     def handle_show_statistics(self):
         self.statistics_win = StatisticsWindow(self.jwt_token, self.current_user_id)
         self.statistics_win.show()
+
+    def handle_sync_with_google(self):
+        self.google_sync_dialog = GoogleSyncDialog(self.jwt_token, self.current_user_id, self)
+        self.google_sync_dialog.exec_()

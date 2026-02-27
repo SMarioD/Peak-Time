@@ -1,8 +1,10 @@
+import json
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QMessageBox, QDialog
 import requests
 from main_window import MainWindow
 from register_dialog import RegisterDialog
+
 
 STYLESHEET = """
 /* ----- Fereastra Principala & Dialoguri ----- */
@@ -129,7 +131,7 @@ class LoginWindow(QWidget):
         super().__init__()
         self.setObjectName("loginWindow")
         self.setWindowTitle("Autentificare - Peak Time")
-        self.setGeometry(100,100,300,200)
+        self.setGeometry(100,100,350,320)
         self.initUI()
         self.main_win=None
 
@@ -137,16 +139,14 @@ class LoginWindow(QWidget):
         layout=QVBoxLayout()
 
         #Camp pentru Email
-        self.email_label=QLabel("Email:")
-        self.email_input=QLineEdit(self)
-        layout.addWidget(self.email_label)
+        self.email_input = QLineEdit(self)
+        self.email_input.setPlaceholderText("Email")
         layout.addWidget(self.email_input)
 
         #Camp pentru parola
-        self.password_label = QLabel("Parola:")
         self.password_input = QLineEdit(self)
+        self.password_input.setPlaceholderText("Parolă")
         self.password_input.setEchoMode(QLineEdit.Password)
-        layout.addWidget(self.password_label)
         layout.addWidget(self.password_input)
 
         layout.addSpacing(10)
@@ -213,9 +213,15 @@ class LoginWindow(QWidget):
                 self.main_win.show()
                 self.close()
             else:
-                error_data=response.json()
-                error_message=error_data.get("error","A aparut o eroare necunoscuta.")
-                QMessageBox.critical(self,"Eroare de Autentificare",error_message)
+                try:
+                    error_data = response.json()
+                    error_message = error_data.get("error", "A apărut o eroare necunoscută.")
+                except json.JSONDecodeError:
+                    error_message = f"Răspuns server non-JSON: {response.text}"
+                except Exception as ex:
+                    error_message = f"Eroare la parsarea răspunsului de eroare: {ex}. Răspuns: {response.text}"
+
+                QMessageBox.critical(self, "Eroare de Autentificare", error_message)
         except requests.exceptions.RequestException as e:
             QMessageBox.critical(self, "Eroare de Conexiune", f"Nu s-a putut realiza conexiunea cu serverul: {e}")
 

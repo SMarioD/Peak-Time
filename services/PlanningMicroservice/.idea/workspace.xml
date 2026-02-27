@@ -5,25 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="745888c1-97b2-4c6a-851b-914f02e8af2e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../StatisticsMicroservice/src/main/kotlin/com/sd/laborator/controller/StatisticsController.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../SynchronizeMicroservice/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../SynchronizeMicroservice/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../SynchronizeMicroservice/src/test/kotlin/com/sd/laborator/HelloTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../../docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MessagingMicroservice/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MessagingMicroservice/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MessagingMicroservice/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../MessagingMicroservice/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/config/GatewayConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/config/GatewayConfig.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../StatisticsMicroservice/.idea/kotlinc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../StatisticsMicroservice/.idea/kotlinc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../StatisticsMicroservice/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../StatisticsMicroservice/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../StatisticsMicroservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../StatisticsMicroservice/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../StatisticsMicroservice/src/main/kotlin/com/sd/laborator/Hello.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TaskManagerMicroservice/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../TaskManagerMicroservice/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TaskManagerMicroservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../TaskManagerMicroservice/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TaskManagerMicroservice/src/main/kotlin/com/sd/laborator/controller/TaskController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../TaskManagerMicroservice/src/main/kotlin/com/sd/laborator/controller/TaskController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TaskManagerMicroservice/src/main/kotlin/com/sd/laborator/model/Task.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../TaskManagerMicroservice/src/main/kotlin/com/sd/laborator/model/Task.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TaskManagerMicroservice/src/main/kotlin/com/sd/laborator/service/TaskService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../TaskManagerMicroservice/src/main/kotlin/com/sd/laborator/service/TaskService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TaskManagerMicroservice/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../TaskManagerMicroservice/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +22,10 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
   </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="2" />
@@ -60,13 +46,14 @@
     "Maven.PlanningMicroservice [package].executor": "Run",
     "Maven.PlanningMicroservice [validate].executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/mario/Local_Disk_Storage/Licenta/Project/services/AuthentificationMicroservice",
+    "last_opened_file_path": "/home/mario/Local_Disk_Storage/LICENTA/Peak-Time/services/PlanningMicroservice",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -75,6 +62,12 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="com.sd.laborator.service" />
+      <recent name="com.sd.laborator.config" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="PlanningMicroserviceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
@@ -88,8 +81,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-30f59d01ecdd-cffe25b9f5b3-intellij.indexing.shared.core-IU-253.28294.334" />
-        <option value="bundled-js-predefined-d6986cc7102b-c7e53b3be11b-JavaScript-IU-253.28294.334" />
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.31033.145" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.31033.145" />
       </set>
     </attachedChunks>
   </component>
@@ -127,6 +120,12 @@
       <workItem from="1762458120855" duration="1075000" />
       <workItem from="1763127956655" duration="1556000" />
       <workItem from="1765724291900" duration="7284000" />
+      <workItem from="1770837842261" duration="30000" />
+      <workItem from="1770845264093" duration="11720000" />
+      <workItem from="1771838650974" duration="135000" />
+      <workItem from="1771840664860" duration="711000" />
+      <workItem from="1772184471710" duration="4808000" />
+      <workItem from="1772222101111" duration="18000" />
     </task>
     <servers />
   </component>

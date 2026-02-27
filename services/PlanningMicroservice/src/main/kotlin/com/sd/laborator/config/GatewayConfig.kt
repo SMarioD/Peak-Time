@@ -65,6 +65,24 @@ open class GatewayConfig {
                     }
                     .uri("http://statistics-service:8080")
             }
+            .route("external-calendar-service-route") { r ->
+                r.path("/api/v1/external-calendar/**")
+                    .filters { f ->
+                        f.filter(authFilter.apply(AuthenticationFilter.Config()))
+                    }
+                    .uri("http://external-calendar-service:8080")
+            }
+            .route("google-oauth2-callback") { r ->
+                r.path("/login/oauth2/code/google")
+                    .uri("http://external-calendar-service:8080")
+            }
+            .route("google-oauth2-init") { r ->
+                r.path("/oauth2/authorization/google")
+                    .filters { f ->
+                        f
+                    }
+                    .uri("http://external-calendar-service:8080")
+            }
             .build()
     }
 }

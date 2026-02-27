@@ -127,6 +127,25 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+
+  external-calendar-db:
+    image: postgres:13-alpine
+    container_name: external-calendar-db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: parola_secreta
+      POSTGRES_DB: external_calendar_db
+    ports:
+      - "5437:5432"
+    volumes:
+      - external_calendar_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d external_calendar_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5      
+ 
       
   zookeeper:
     image: confluentinc/cp-zookeeper:5.5.1
@@ -287,10 +306,40 @@ services:
         condition: service_healthy
       statistics-service:
         condition: service_healthy
+      external-calendar-service:
+        condition: service_healthy
 
+  external-calendar-service:
+    container_name: external-calendar-service
+    build:
+      context: ./services/ExternalCalendarMicroservice
+    ports:
+      - "8089:8080"
+    depends_on:
+      external-calendar-db:
+        condition: service_healthy
+      auth-service:
+        condition: service_healthy
+    environment:
+      DB_HOST: external-calendar-db
+      DB_PORT: 5432
+      DB_NAME: external_calendar_db
+      DB_USER: admin
+      DB_PASSWORD: parola_secreta
+      SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_ID: YOUR_GOOGLE_CLIENT_ID
+      SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_SECRET: YOUR_GOOGLE_CLIENT_SECRET
+      SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_REDIRECT_URI: "http://localhost:8080/login/oauth2/code/google"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+  
 volumes:
   auth_db_data:
   calendar_db_data:
   task_db_data:
   messaging_db_data:
   statistics_db_data:
+  external_calendar_db_data:

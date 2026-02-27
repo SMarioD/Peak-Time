@@ -11,8 +11,18 @@ open class SecurityConfig {
     @Bean
     open fun springSecurityFilterChain(http: ServerHttpSecurity): SecurityWebFilterChain {
         http
-            .authorizeExchange { exchanges -> exchanges.anyExchange().permitAll() }
-            .csrf { csrf -> csrf.disable() }
+            .csrf().disable()
+            .authorizeExchange()
+            .pathMatchers("/api/v1/auth/login").permitAll()
+            .pathMatchers("/api/v1/auth/register").permitAll()
+            .pathMatchers("/oauth2/authorization/google").permitAll()
+            .pathMatchers("/login/oauth2/code/google").permitAll()
+            .pathMatchers("/actuator/**").permitAll()
+            .anyExchange().permitAll()
+            .and()
+            .httpBasic().disable()
+            .formLogin().disable()
+
         return http.build()
     }
 }

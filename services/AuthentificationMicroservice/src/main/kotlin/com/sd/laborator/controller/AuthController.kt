@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.bind.annotation.RequestHeader
+import org.springframework.security.authentication.BadCredentialsException
+import org.springframework.security.authentication.DisabledException
+import org.springframework.security.authentication.LockedException
 
 
 @RestController
@@ -52,11 +55,18 @@ class AuthController (private val authService: AuthService) {
             )
             ResponseEntity.ok(response)
         }
-        catch (e: IllegalArgumentException)
-        {
+        catch (e: BadCredentialsException) {
+            ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(mapOf("error" to "Email sau parolă incorecte."))
+        } catch (e: IllegalArgumentException) {
             ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(mapOf("error" to e.message))
-        }catch (e: Exception) {
-            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mapOf("error" to "A aparut o eroare interna."))
+        } catch (e: DisabledException) {
+            ResponseEntity.status(HttpStatus.FORBIDDEN).body(mapOf("error" to "Contul utilizatorului este dezactivat."))
+        } catch (e: LockedException) {
+            ResponseEntity.status(HttpStatus.FORBIDDEN).body(mapOf("error" to "Contul utilizatorului este blocat."))
+        }
+        catch (e: Exception) {
+            println("Eroare neașteptată la login: ${e.message}")
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mapOf("error" to "A apărut o eroare internă la autentificare."))
         }
     }
 

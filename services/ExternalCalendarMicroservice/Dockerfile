@@ -1,0 +1,9 @@
+FROM eclipse-temurin:11-jre-alpine
+
+RUN apk add --no-cache curl
+
+WORKDIR /app
+
+COPY target/ExternalCalendarMicroservice-1.0-SNAPSHOT.jar app.jar
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
