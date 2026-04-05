@@ -5,6 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="745888c1-97b2-4c6a-851b-914f02e8af2e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../../docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ExternalCalendarMicroservice/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../ExternalCalendarMicroservice/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -125,7 +128,7 @@
       <workItem from="1771838650974" duration="135000" />
       <workItem from="1771840664860" duration="711000" />
       <workItem from="1772184471710" duration="4808000" />
-      <workItem from="1772222101111" duration="18000" />
+      <workItem from="1772222101111" duration="663000" />
     </task>
     <servers />
   </component>

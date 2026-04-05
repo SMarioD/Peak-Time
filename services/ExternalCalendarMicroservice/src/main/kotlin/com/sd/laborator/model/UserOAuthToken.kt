@@ -28,6 +28,9 @@ data class UserOAuthToken(
     @Column(name = "scope", length = 1024)
     var scope: String? = null,
 
+    @Column(name = "created_at", nullable = false, updatable = false)
+    var createdAt: LocalDateTime = LocalDateTime.now(),
+
     @Column(name = "updated_at")
     var updatedAt: LocalDateTime = LocalDateTime.now()
 )

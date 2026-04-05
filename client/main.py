@@ -1,7 +1,12 @@
-import json
+import os
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QMessageBox, QDialog
+os.environ["QT_QPA_PLATFORM"] = "xcb"
+os.environ["QT_LOGGING_RULES"] = "*.debug=false;qt.qpa.wayland.debug=false"
+os.environ["XDG_SESSION_TYPE"] = "x11"
+import json
 import requests
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QMessageBox, QDialog
+from PyQt5.QtCore import Qt
 from main_window import MainWindow
 from register_dialog import RegisterDialog
 
@@ -14,7 +19,7 @@ QWidget, QDialog {
     font-family: "Segoe UI", Arial, sans-serif;
 }
 
-/* ----- Etichete (Labels) ----- */
+/* ----- Etichete ----- */
 QLabel {
     font-size: 14px;
     color: #a9b7c6;
@@ -39,7 +44,7 @@ QLineEdit:focus {
     border: 1px solid #007ACC;
 }
 
-/* ----- Dropdown (ComboBox) ----- */
+/* ----- Dropdown----- */
 QComboBox {
     background-color: #3c3e41;
     border: 1px solid #555555;
@@ -145,7 +150,7 @@ class LoginWindow(QWidget):
 
         #Camp pentru parola
         self.password_input = QLineEdit(self)
-        self.password_input.setPlaceholderText("Parolă")
+        self.password_input.setPlaceholderText("Parola")
         self.password_input.setEchoMode(QLineEdit.Password)
         layout.addWidget(self.password_input)
 
@@ -157,7 +162,7 @@ class LoginWindow(QWidget):
         layout.addWidget(self.login_button)
 
         # Buton de inregistrare
-        self.register_button = QPushButton("Nu ai cont? Creează unul acum", self)
+        self.register_button = QPushButton("Nu ai cont? Creeaza unul acum", self)
         self.register_button.setObjectName("registerButton")
         self.register_button.clicked.connect(self.handle_register_dialog)
         layout.addWidget(self.register_button)
@@ -173,10 +178,10 @@ class LoginWindow(QWidget):
                 try:
                     response=requests.post(register_url, json=data)
                     if response.status_code==201:
-                        QMessageBox.information(self,"Succes","Contul a fost creat cu succes! Vă puteți autentifica acum.")
+                        QMessageBox.information(self,"Succes","Contul a fost creat cu succes! Va puteti autentifica acum.")
                     else:
                         error_data=response.json()
-                        QMessageBox.critical(self,"Eroare la Înregistrare",error_data.get("error","A apărut o eroare."))
+                        QMessageBox.critical(self,"Eroare la inregistrare",error_data.get("error","A aparut o eroare."))
                 except requests.exceptions.RequestException as e:
                     QMessageBox.critical(self,"Eoare de conexiune",str(e))
 
@@ -215,11 +220,11 @@ class LoginWindow(QWidget):
             else:
                 try:
                     error_data = response.json()
-                    error_message = error_data.get("error", "A apărut o eroare necunoscută.")
+                    error_message = error_data.get("error", "A aparut o eroare necunoscuta.")
                 except json.JSONDecodeError:
-                    error_message = f"Răspuns server non-JSON: {response.text}"
+                    error_message = f"Raspuns server non-JSON: {response.text}"
                 except Exception as ex:
-                    error_message = f"Eroare la parsarea răspunsului de eroare: {ex}. Răspuns: {response.text}"
+                    error_message = f"Eroare la parsarea raspunsului de eroare: {ex}. Raspuns: {response.text}"
 
                 QMessageBox.critical(self, "Eroare de Autentificare", error_message)
         except requests.exceptions.RequestException as e:
@@ -227,6 +232,9 @@ class LoginWindow(QWidget):
 
 
 if __name__ == '__main__':
+    QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
+    QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
+
     app = QApplication(sys.argv)
     app.setStyleSheet(STYLESHEET)
     login_win = LoginWindow()

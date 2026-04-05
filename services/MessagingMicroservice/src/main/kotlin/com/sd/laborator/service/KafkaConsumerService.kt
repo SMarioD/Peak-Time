@@ -1,6 +1,5 @@
 package com.sd.laborator.service
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.sd.laborator.model.Message
 import com.sd.laborator.repository.MessageRepository
 import org.springframework.messaging.simp.SimpMessagingTemplate
@@ -12,24 +11,18 @@ class KafkaConsumerService(
     private val messageRepository: MessageRepository,
     private val messagingTemplate: SimpMessagingTemplate
 ) {
-
-    private val objectMapper = jacksonObjectMapper().findAndRegisterModules()
-
     @KafkaListener(topics = ["chat_messages"], groupId = "messaging_group")
-    fun listen(message: String) {
-        println("Mesaj primit din Kafka: $message")
+    fun listen(messageObject: Message) {
         try {
-            val messageObject = objectMapper.readValue(message, Message::class.java)
+            println("Mesaj primit pentru salvare: ${messageObject.continut}")
 
             messageRepository.save(messageObject)
-
             messagingTemplate.convertAndSend("/topic/messages/${messageObject.receiverId}", messageObject)
             messagingTemplate.convertAndSend("/topic/messages/${messageObject.senderId}", messageObject)
 
-            println("Mesajul pentru userii ${messageObject.receiverId} și ${messageObject.senderId} a fost trimis la broker-ul WebSocket.")
-
+            println("Succes: Mesaj procesat și distribuit.")
         } catch (e: Exception) {
-            println("Eroare la procesarea mesajului din Kafka: ${e.message}")
+            println("Eroare la procesarea mesajului: ${e.message}")
         }
     }
 }

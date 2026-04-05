@@ -16,7 +16,7 @@ class SharedPlanDetailsWindow(QDialog):
 
     def initUI(self):
         layout = QVBoxLayout()
-        self.details_label = QLabel("Se încarcă evenimentele...")
+        self.details_label = QLabel("Se incarca evenimentele...")
         layout.addWidget(self.details_label)
 
         self.events_list_widget = QListWidget()
@@ -32,7 +32,7 @@ class SharedPlanDetailsWindow(QDialog):
         try:
             response = requests.get(events_url, headers=headers)
             if response.status_code != 200:
-                QMessageBox.critical(self, "Eroare", "Nu s-au putut încărca evenimentele partajate.")
+                QMessageBox.critical(self, "Eroare", "Nu s-au putut incarca evenimentele partajate.")
                 return
 
             all_events = response.json()
@@ -58,7 +58,7 @@ class SharedPlanDetailsWindow(QDialog):
                     visible_events_found = True
 
             if not visible_events_found:
-                self.events_list_widget.addItem("Niciun eveniment vizibil în acest interval.")
+                self.events_list_widget.addItem("Niciun eveniment vizibil in acest interval.")
 
         except requests.exceptions.RequestException as e:
             QMessageBox.critical(self, "Eroare de Conexiune", str(e))

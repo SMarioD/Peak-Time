@@ -57,4 +57,16 @@ class CalendarController (private val calendarService: CalendarService) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mapOf("error" to "Eroare la preluarea partajarilor."))
         }
     }
+
+    @DeleteMapping("/events/{id}")
+    fun deleteEvent(@PathVariable id: Int, @RequestHeader("X-User-Id") userId: Int): ResponseEntity<Any> {
+        return try {
+            calendarService.deleteEvent(id, userId)
+            ResponseEntity.ok(mapOf("message" to "Eveniment șters cu succes."))
+        } catch (e: SecurityException) {
+            ResponseEntity.status(HttpStatus.FORBIDDEN).body(mapOf("error" to e.message))
+        } catch (e: Exception) {
+            ResponseEntity.badRequest().body(mapOf("error" to e.message))
+        }
+    }
 }

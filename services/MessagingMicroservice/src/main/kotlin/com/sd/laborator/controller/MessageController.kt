@@ -13,26 +13,26 @@ import java.time.LocalDateTime
 
 @RestController
 @RequestMapping("/api/v1/messages")
-class MessageController(private val messageService: MessageService,
-                        private val kafkaProducerService: KafkaProducerService)
-{
-    private val objectMapper = jacksonObjectMapper().findAndRegisterModules()
-
+class MessageController(
+    private val messageService: MessageService,
+    private val kafkaProducerService: KafkaProducerService
+) {
     @PostMapping
     fun sendMessage(@RequestHeader("X-User-Id") senderId: Int, @RequestBody request: SendMessageRequest): ResponseEntity<Any> {
-        val messageObject = Message(
-            senderId = senderId,
-            receiverId = request.receiverId,
-            continut = request.continut,
-            timestamp = LocalDateTime.now()
-        )
-        val messageJson = objectMapper.writeValueAsString(messageObject)
+        return try {
+            val messageObject = Message(
+                senderId = senderId,
+                receiverId = request.receiverId,
+                continut = request.continut,
+                timestamp = LocalDateTime.now()
+            )
+            kafkaProducerService.sendMessage("chat_messages", messageObject)
 
-        kafkaProducerService.sendMessage("chat_messages", messageJson)
-
-        return ResponseEntity.accepted().body(mapOf("status" to "Mesaj trimis spre procesare."))
+            ResponseEntity.accepted().body(mapOf("status" to "Mesaj trimis spre procesare."))
+        } catch (e: Exception) {
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mapOf("error" to e.message))
+        }
     }
-
     @GetMapping("/{partnerId}")
     fun getConversation(@RequestHeader("X-User-Id") userId: Int, @PathVariable partnerId: Int): ResponseEntity<Any> {
         return try {

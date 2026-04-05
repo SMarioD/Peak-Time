@@ -11,7 +11,7 @@ class GoogleSyncDialog(QDialog):
         self.jwt_token = jwt_token
         self.current_user_id = current_user_id
 
-        self.setWindowTitle("Sincronizează cu Google Calendar")
+        self.setWindowTitle("Sincronizeaza cu Google Calendar")
         self.setGeometry(200, 200, 450, 250)
         self.initUI()
 
@@ -22,19 +22,19 @@ class GoogleSyncDialog(QDialog):
         layout.setContentsMargins(20, 20, 20, 20)
         layout.setSpacing(15)
 
-        self.status_label = QLabel("Status Google Calendar: Se verifică...")
+        self.status_label = QLabel("Status Google Calendar: Se verifica...")
         self.status_label.setAlignment(Qt.AlignCenter)
         layout.addWidget(self.status_label)
 
-        self.connect_button = QPushButton("1. Conectează / Schimbă Contul Google")
+        self.connect_button = QPushButton("1. Conecteaza / Schimba Contul Google")
         self.connect_button.clicked.connect(self.handle_google_connect)
         layout.addWidget(self.connect_button)
 
-        self.refresh_status_button = QPushButton("2. Verifică Conexiunea (apasă după ce finalizezi în browser)")
+        self.refresh_status_button = QPushButton("2. Verifica Conexiunea (apasa dupa ce finalizezi in browser)")
         self.refresh_status_button.clicked.connect(self.check_connection_status)
         layout.addWidget(self.refresh_status_button)
 
-        self.import_button = QPushButton("3. Importă Evenimente Google în Peak Time")
+        self.import_button = QPushButton("3. Importa Evenimente Google in Peak Time")
         self.import_button.clicked.connect(self.handle_google_import)
         self.import_button.setEnabled(False)
         self.import_button.setStyleSheet("background-color: #28a745; color: white;")
@@ -45,7 +45,7 @@ class GoogleSyncDialog(QDialog):
         layout.addWidget(self.buttons)
 
     def check_connection_status(self):
-        """Verifică dacă utilizatorul are un token salvat în DB"""
+        """Verifica daca utilizatorul are un token salvat in DB"""
         status_url = f"http://localhost:8080/api/v1/external-calendar/google/status?userId={self.current_user_id}"
         headers = {"Authorization": f"Bearer {self.jwt_token}"}
         try:
@@ -66,14 +66,14 @@ class GoogleSyncDialog(QDialog):
         google_auth_url = f"http://localhost:8080/api/v1/external-calendar/google/link?userId={self.current_user_id}"
         QDesktopServices.openUrl(QUrl(google_auth_url))
         QMessageBox.information(self, "Autentificare Google",
-                                "Browser-ul s-a deschis. Finalizează pașii acolo, apoi apasă 'Verifică Conexiunea' aici.")
+                                "Browser-ul s-a deschis. Finalizeaza pasii acolo, apoi apasa 'Verifica Conexiunea' aici.")
 
     def handle_google_import(self):
         import_url = f"http://localhost:8080/api/v1/external-calendar/google/import?userId={self.current_user_id}"
         headers = {"Authorization": f"Bearer {self.jwt_token}"}
 
         try:
-            self.import_button.setText("Se importă... te rugăm așteaptă")
+            self.import_button.setText("Se importa... te rugam asteapta")
             self.import_button.setEnabled(False)
 
             response = requests.post(import_url, headers=headers)
@@ -81,9 +81,9 @@ class GoogleSyncDialog(QDialog):
                 QMessageBox.information(self, "Succes", "Evenimentele Google au fost importate!")
                 self.accept()
             else:
-                QMessageBox.critical(self, "Eroare", f"Importul a eșuat: {response.text}")
+                QMessageBox.critical(self, "Eroare", f"Importul a esuat: {response.text}")
                 self.import_button.setEnabled(True)
-                self.import_button.setText("3. Importă Evenimente Google în Peak Time")
+                self.import_button.setText("3. Importa Evenimente Google in Peak Time")
         except Exception as e:
             QMessageBox.critical(self, "Eroare", str(e))
             self.import_button.setEnabled(True)

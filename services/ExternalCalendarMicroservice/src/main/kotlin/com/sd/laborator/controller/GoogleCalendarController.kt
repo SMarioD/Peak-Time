@@ -40,34 +40,50 @@ open class GoogleCalendarController(
     fun saveGoogleToken(
         @RegisteredOAuth2AuthorizedClient("google") authorizedClient: OAuth2AuthorizedClient,
         @AuthenticationPrincipal oauth2User: OAuth2User,
-        @CookieValue("peak_time_user_id") userIdFromCookie: String
+        @CookieValue(name = "peak_time_user_id", required = false) userIdFromCookie: String?
     ): ResponseEntity<String> {
 
-        val userId = userIdFromCookie.toInt()
-        val googleEmail = oauth2User.getAttribute<String>("email")
+        val googleEmail = oauth2User.getAttribute<String>("email") ?: ""
+        val userId = if (userIdFromCookie != null) {
+            userIdFromCookie.toInt()
+        } else {
+            try {
+                val userRes = restTemplate.getForObject("$authServiceUrl/users/search?email=$googleEmail", UserResponse::class.java)
+                userRes?.id ?: throw Exception("User not found")
+            } catch (e: Exception) {
+                return ResponseEntity.status(404).body(
+                    "Eroare: Nu am putut identifica contul Peak Time pentru $googleEmail. " +
+                            "Asigurați-vă că folosiți același email sau reîncercați conectarea din aplicația Python."
+                )
+            }
+        }
 
         val accessToken = authorizedClient.accessToken.tokenValue
         val refreshToken = authorizedClient.refreshToken?.tokenValue
         val expiresAt = authorizedClient.accessToken.expiresAt?.atOffset(ZoneOffset.UTC)?.toLocalDateTime()
 
-        val existingToken = userOAuthTokenRepository.findByUserIdAndProvider(userId, "google")
-        val userOAuthToken = existingToken?.apply {
-            this.accessToken = accessToken
-            this.refreshToken = refreshToken ?: this.refreshToken
-            this.expiresAt = expiresAt
-            this.updatedAt = LocalDateTime.now()
-        } ?: UserOAuthToken(
-            userId = userId,
-            provider = "google",
-            accessToken = accessToken,
-            refreshToken = refreshToken,
-            expiresAt = expiresAt,
-            scope = authorizedClient.accessToken.scopes.joinToString(", ")
-        )
+        try {
+            val existingToken = userOAuthTokenRepository.findByUserIdAndProvider(userId, "google")
+            val userOAuthToken = existingToken?.apply {
+                this.accessToken = accessToken
+                if (refreshToken != null) this.refreshToken = refreshToken
+                this.expiresAt = expiresAt
+                this.updatedAt = LocalDateTime.now()
+            } ?: UserOAuthToken(
+                userId = userId,
+                provider = "google",
+                accessToken = accessToken,
+                refreshToken = refreshToken,
+                expiresAt = expiresAt,
+                scope = authorizedClient.accessToken.scopes.joinToString(", "),
+                createdAt = LocalDateTime.now()
+            )
 
-        userOAuthTokenRepository.save(userOAuthToken)
-
-        return ResponseEntity.ok("Succes! Contul Google ($googleEmail) a fost legat de contul tău Peak Time (ID: $userId).")
+            userOAuthTokenRepository.save(userOAuthToken)
+            return ResponseEntity.ok("Succes! Contul Google ($googleEmail) a fost legat de Peak Time (ID: $userId). Puteți închide fereastra.")
+        } catch (e: Exception) {
+            return ResponseEntity.status(500).body("Eroare la salvarea token-ului în baza de date: ${e.message}")
+        }
     }
 
     @GetMapping("/google/callback")

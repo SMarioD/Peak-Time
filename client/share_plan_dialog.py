@@ -21,7 +21,7 @@ class SharePlanDialog(QDialog):
     def initUI(self):
         layout = QVBoxLayout()
 
-        # Creăm widget-urile întâi
+        # Cream widget-urile intai
         layout.addWidget(QLabel("Partajeaza cu:"))
         self.connections_combo = QComboBox()
         layout.addWidget(self.connections_combo)
@@ -30,7 +30,7 @@ class SharePlanDialog(QDialog):
         self.start_datetime = QDateTimeEdit(QDateTime.currentDateTime())
         layout.addWidget(self.start_datetime)
 
-        layout.addWidget(QLabel("Până la:"))
+        layout.addWidget(QLabel("Pana la:"))
         self.end_datetime = QDateTimeEdit(QDateTime.currentDateTime().addDays(7))
         layout.addWidget(self.end_datetime)
 
@@ -39,7 +39,7 @@ class SharePlanDialog(QDialog):
         self.start_datetime.dateTimeChanged.connect(self.update_events_list)
         self.end_datetime.dateTimeChanged.connect(self.update_events_list)
 
-        layout.addWidget(QLabel("Selectează evenimentele de ascuns (opțional):"))
+        layout.addWidget(QLabel("Selecteaza evenimentele de ascuns (optional):"))
         self.events_list = QListWidget()
         self.events_list.setSelectionMode(QListWidget.MultiSelection)
         layout.addWidget(self.events_list)
@@ -57,12 +57,12 @@ class SharePlanDialog(QDialog):
         try:
             response = requests.get(connections_url, headers=headers)
             if response.status_code != 200:
-                QMessageBox.critical(self, "Eroare", "Nu s-au putut încărca conexiunile.")
+                QMessageBox.critical(self, "Eroare", "Nu s-au putut incarca conexiunile.")
                 return
 
             connections = [c for c in response.json() if c.get('status') == 'acceptat']
             if not connections:
-                self.connections_combo.addItem("Nicio conexiune acceptată")
+                self.connections_combo.addItem("Nicio conexiune acceptata")
                 return
 
             partner_ids = {
@@ -90,7 +90,7 @@ class SharePlanDialog(QDialog):
                 self.events = response.json()
                 self.events_list.clear()
                 if not self.events:
-                    self.events_list.addItem("Nu aveți evenimente de ascuns.")
+                    self.events_list.addItem("Nu aveti evenimente de ascuns.")
                 else:
                     for event in self.events:
                         item_text = f"{event.get('titlu')} ({event.get('dataInceput')})"
@@ -98,7 +98,7 @@ class SharePlanDialog(QDialog):
                         list_item.setData(Qt.UserRole, event)
                         self.events_list.addItem(list_item)
             else:
-                QMessageBox.critical(self, "Eroare", "Nu s-au putut încărca evenimentele.")
+                QMessageBox.critical(self, "Eroare", "Nu s-au putut incarca evenimentele.")
         except requests.exceptions.RequestException as e:
             QMessageBox.critical(self, "Eroare de Conexiune", str(e))
 
@@ -111,7 +111,7 @@ class SharePlanDialog(QDialog):
                 self.all_user_events = response.json()
                 self.update_events_list()
             else:
-                QMessageBox.critical(self, "Eroare", "Nu s-au putut încărca evenimentele.")
+                QMessageBox.critical(self, "Eroare", "Nu s-au putut incarca evenimentele.")
         except requests.exceptions.RequestException as e:
             QMessageBox.critical(self, "Eroare de Conexiune", str(e))
 
@@ -135,7 +135,7 @@ class SharePlanDialog(QDialog):
                 print(f"Eroare la parsarea datei evenimentului: {e}")
 
         if not filtered_events:
-            self.events_list.addItem("Niciun eveniment în acest interval.")
+            self.events_list.addItem("Niciun eveniment in acest interval.")
         else:
             for event in filtered_events:
                 item_text = f"{event.get('titlu')} ({event.get('dataInceput')})"

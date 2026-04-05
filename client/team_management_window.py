@@ -24,7 +24,7 @@ class TeamManagementWindow(QWidget):
 
         # --- Panoul Dreapta: Creare Task Nou ---
         right_layout=QVBoxLayout()
-        right_layout.addWidget(QLabel("Creează o Sarcină Nouă"))
+        right_layout.addWidget(QLabel("Creeaza o Sarcina Noua"))
 
         self.title_lable=QLabel("Titlu Sarcina:")
         self.title_input=QLineEdit()
@@ -57,7 +57,7 @@ class TeamManagementWindow(QWidget):
                 accepted_connections = [c for c in connections if c.get('status') == 'acceptat']
                 self.team_list_widget.clear()
                 if not accepted_connections:
-                    self.team_list_widget.addItem("Nu aveți membri în echipă.")
+                    self.team_list_widget.addItem("Nu aveti membri in echipa.")
                     return
 
                 partner_ids = {
@@ -75,7 +75,7 @@ class TeamManagementWindow(QWidget):
                             list_item.setData(Qt.UserRole, user)
                             self.team_list_widget.addItem(list_item)
             else:
-                QMessageBox.critical(self, "Eroare", "Nu s-au putut încărca membrii echipei.")
+                QMessageBox.critical(self, "Eroare", "Nu s-au putut incarca membrii echipei.")
 
         except requests.exceptions.RequestException as e:
             QMessageBox.critical(self, "Eroare de Conexiune", str(e))
@@ -83,7 +83,7 @@ class TeamManagementWindow(QWidget):
     def assign_task(self):
         selected_items = self.team_list_widget.selectedItems()
         if not selected_items:
-            QMessageBox.warning(self, "Atenție", "Vă rugăm selectați un membru al echipei.")
+            QMessageBox.warning(self, "Atentie", "Va rugam selectati un membru al echipei.")
             return
 
         selected_user = selected_items[0].data(Qt.UserRole)
@@ -92,7 +92,7 @@ class TeamManagementWindow(QWidget):
         task_description = self.desc_input.toPlainText()
 
         if not task_title:
-            QMessageBox.warning(self, "Atenție", "Titlul sarcinii este obligatoriu.")
+            QMessageBox.warning(self, "Atentie", "Titlul sarcinii este obligatoriu.")
             return
 
         tasks_url = "http://localhost:8080/api/v1/tasks"
@@ -106,8 +106,8 @@ class TeamManagementWindow(QWidget):
         try:
             response = requests.post(tasks_url, headers=headers, json=payload)
             if response.status_code == 201:
-                QMessageBox.information(self, "Succes", f"Sarcina '{task_title}' a fost atribuită cu succes.")
-                # Resetăm câmpurile
+                QMessageBox.information(self, "Succes", f"Sarcina '{task_title}' a fost atribuita cu succes.")
+                # Resetam campurile
                 self.title_input.clear()
                 self.desc_input.clear()
             else:

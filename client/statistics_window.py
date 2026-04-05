@@ -9,14 +9,14 @@ class StatisticsWindow(QWidget):
         self.jwt_token = jwt_token
         self.current_user_id = current_user_id
 
-        self.setWindowTitle("Statistici Echipă")
+        self.setWindowTitle("Statistici Echipa")
         self.setGeometry(300, 300, 700, 400)
         self.initUI()
         self.load_statistics()
 
     def initUI(self):
         layout = QVBoxLayout()
-        layout.addWidget(QLabel("Performanța și Încărcarea Membrilor Echipei:"))
+        layout.addWidget(QLabel("Performanta si incarcarea Membrilor Echipei:"))
 
         self.stats_table = QTableWidget()
         self.stats_table.setColumnCount(4)
@@ -26,7 +26,7 @@ class StatisticsWindow(QWidget):
         self.stats_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         layout.addWidget(self.stats_table)
 
-        self.refresh_button = QPushButton("Reîmprospătează")
+        self.refresh_button = QPushButton("Reimprospateaza")
         self.refresh_button.clicked.connect(self.load_statistics)
         layout.addWidget(self.refresh_button)
 
@@ -38,13 +38,13 @@ class StatisticsWindow(QWidget):
         try:
             response = requests.get(connections_url, headers=headers)
             if response.status_code != 200:
-                QMessageBox.critical(self, "Eroare", "Nu s-au putut încărca membrii echipei.")
+                QMessageBox.critical(self, "Eroare", "Nu s-au putut incarca membrii echipei.")
                 return
 
             connections = [c for c in response.json() if c.get('status') == 'acceptat']
             if not connections:
                 self.stats_table.setRowCount(1)
-                self.stats_table.setItem(0, 0, QTableWidgetItem("Nu aveți membri în echipă."))
+                self.stats_table.setItem(0, 0, QTableWidgetItem("Nu aveti membri in echipa."))
                 return
 
             partner_ids = [conn.get('utilizator1Id') if conn.get('utilizator2Id') == self.current_user_id else conn.get(
@@ -52,7 +52,7 @@ class StatisticsWindow(QWidget):
 
             if not partner_ids:
                 self.stats_table.setRowCount(1)
-                self.stats_table.setItem(0, 0, QTableWidgetItem("Nu aveți membri în echipă."))
+                self.stats_table.setItem(0, 0, QTableWidgetItem("Nu aveti membri in echipa."))
                 return
             ids_string = ",".join(map(str, partner_ids))
             stats_url = f"http://localhost:8080/api/v1/statistics/team-performance?employeeIds={ids_string}"
@@ -60,7 +60,7 @@ class StatisticsWindow(QWidget):
             stats_response = requests.get(stats_url, headers=headers)
 
             if stats_response.status_code != 200:
-                QMessageBox.critical(self, "Eroare", f"Nu s-au putut încărca statisticile: {stats_response.text}")
+                QMessageBox.critical(self, "Eroare", f"Nu s-au putut incarca statisticile: {stats_response.text}")
                 return
 
             stats_data = stats_response.json()

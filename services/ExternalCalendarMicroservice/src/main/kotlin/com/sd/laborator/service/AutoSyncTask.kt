@@ -11,13 +11,16 @@ class AutoSyncTask(
 ) {
     @Scheduled(fixedRate = 60000)
     fun processAllSyncs() {
-        println("Pornire sincronizare automată pentru toți utilizatorii...")
         val allTokens = userOAuthTokenRepository.findAll()
         allTokens.forEach { token ->
             try {
                 googleCalendarService.syncEventsToInternalCalendar(token.userId)
             } catch (e: Exception) {
-                println("Eroare la sincronizarea automată pentru user ${token.userId}: ${e.message}")
+                if (e.message?.contains("401") == true || e is IllegalStateException) {
+                    println("CRITICAL: Sesiune Google expirată/invalidă pentru user ${token.userId}. Sincronizarea este oprită până la reconectare.")
+                } else {
+                    println("EROARE TEMPORARĂ user ${token.userId}: ${e.message}")
+                }
             }
         }
     }

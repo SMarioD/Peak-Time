@@ -39,7 +39,7 @@ class TasksWindow(QWidget):
                         list_item.setData(Qt.UserRole, task)
                         self.tasks_list_widget.addItem(list_item)
             else:
-                self.tasks_list_widget.addItem(f"Eroare la încărcarea sarcinilor (Status: {response.status_code}).")
+                self.tasks_list_widget.addItem(f"Eroare la incarcarea sarcinilor (Status: {response.status_code}).")
         except requests.exceptions.RequestException:
             self.tasks_list_widget.addItem("Eroare de conexiune.")
 
@@ -62,7 +62,7 @@ class TasksWindow(QWidget):
             response = requests.put(update_url, headers=headers, json=payload)
             if response.status_code == 200:
                 QMessageBox.information(self, "Succes", "Statusul sarcinii a fost actualizat.")
-                self.load_tasks()  # Reîmprospătăm lista
+                self.load_tasks()  # Reimprospatam lista
             else:
                 QMessageBox.critical(self, "Eroare", f"Nu s-a putut actualiza statusul: {response.text}")
         except requests.exceptions.RequestException as e:

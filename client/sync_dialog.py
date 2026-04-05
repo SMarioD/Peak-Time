@@ -10,7 +10,7 @@ class SyncDialog(QDialog):
         self.jwt_token = jwt_token
         self.current_user_id = current_user_id
 
-        self.setWindowTitle("Sincronizează Calendare")
+        self.setWindowTitle("Sincronizeaza Calendare")
         self.setGeometry(200, 200, 400, 500)
         self.initUI()
         self.load_connections()
@@ -18,22 +18,22 @@ class SyncDialog(QDialog):
     def initUI(self):
         layout = QVBoxLayout()
 
-        layout.addWidget(QLabel("Selectează utilizatorii pentru sincronizare (Ctrl+Click):"))
+        layout.addWidget(QLabel("Selecteaza utilizatorii pentru sincronizare (Ctrl+Click):"))
         self.connections_list = QListWidget()
         self.connections_list.setSelectionMode(QListWidget.MultiSelection)
         layout.addWidget(self.connections_list)
 
-        layout.addWidget(QLabel("Interval de căutare - De la:"))
+        layout.addWidget(QLabel("Interval de cautare - De la:"))
         self.start_datetime = QDateTimeEdit(QDateTime.currentDateTime())
         self.start_datetime.setCalendarPopup(True)
         layout.addWidget(self.start_datetime)
 
-        layout.addWidget(QLabel("Până la:"))
+        layout.addWidget(QLabel("Pana la:"))
         self.end_datetime = QDateTimeEdit(QDateTime.currentDateTime().addDays(1))
         self.end_datetime.setCalendarPopup(True)
         layout.addWidget(self.end_datetime)
 
-        layout.addWidget(QLabel("Durata minimă a intervalului liber (minute):"))
+        layout.addWidget(QLabel("Durata minima a intervalului liber (minute):"))
         self.duration_spinbox = QSpinBox()
         self.duration_spinbox.setRange(15, 480)
         self.duration_spinbox.setValue(60)
@@ -54,7 +54,7 @@ class SyncDialog(QDialog):
             if response.status_code == 200:
                 connections = [c for c in response.json() if c.get('status') == 'acceptat']
                 if not connections:
-                    self.connections_list.addItem("Nicio conexiune acceptată.")
+                    self.connections_list.addItem("Nicio conexiune acceptata.")
                     return
 
                 partner_ids = {
@@ -75,7 +75,7 @@ class SyncDialog(QDialog):
     def get_data(self):
         selected_items = self.connections_list.selectedItems()
         if not selected_items:
-            QMessageBox.warning(self, "Eroare", "Trebuie să selectezi cel puțin un utilizator.")
+            QMessageBox.warning(self, "Eroare", "Trebuie sa selectezi cel putin un utilizator.")
             return None
 
         user_ids = [self.current_user_id]

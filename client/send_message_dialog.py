@@ -19,16 +19,16 @@ class SendMessageDialog(QDialog):
     def initUI(self):
         layout = QVBoxLayout()
 
-        layout.addWidget(QLabel("Caută utilizator după email:"))
+        layout.addWidget(QLabel("Cauta utilizator dupa email:"))
         self.search_input = QLineEdit()
         self.search_input.setPlaceholderText("email@exemplu.com")
         layout.addWidget(self.search_input)
 
-        self.search_button = QPushButton("Caută")
+        self.search_button = QPushButton("Cauta")
         self.search_button.clicked.connect(self.search_user)
         layout.addWidget(self.search_button)
 
-        layout.addWidget(QLabel("Sau selectează din conexiunile tale:"))
+        layout.addWidget(QLabel("Sau selecteaza din conexiunile tale:"))
         self.user_list_widget = QListWidget()
         self.user_list_widget.itemDoubleClicked.connect(self.on_user_selected)
         layout.addWidget(self.user_list_widget)
@@ -54,7 +54,7 @@ class SendMessageDialog(QDialog):
     def populate_user_list(self, connections):
         self.user_list_widget.clear()
         if not connections:
-            self.user_list_widget.addItem("Nicio conexiune acceptată.")
+            self.user_list_widget.addItem("Nicio conexiune acceptata.")
             return
 
         partner_ids = {
@@ -76,7 +76,7 @@ class SendMessageDialog(QDialog):
     def search_user(self):
         email_to_search = self.search_input.text()
         if not email_to_search:
-            QMessageBox.warning(self, "Atenție", "Introduceți un email pentru a căuta.")
+            QMessageBox.warning(self, "Atentie", "Introduceti un email pentru a cauta.")
             return
 
         search_url = f"http://localhost:8080/api/v1/auth/users/search?email={email_to_search}"
@@ -91,14 +91,14 @@ class SendMessageDialog(QDialog):
                 list_item.setData(Qt.UserRole, user_data)
                 self.user_list_widget.addItem(list_item)
             else:
-                QMessageBox.information(self, "Rezultat", "Niciun utilizator găsit cu acest email.")
+                QMessageBox.information(self, "Rezultat", "Niciun utilizator gasit cu acest email.")
         except requests.exceptions.RequestException as e:
             QMessageBox.critical(self, "Eroare de Conexiune", str(e))
 
     def on_user_selected(self):
         selected_items = self.user_list_widget.selectedItems()
         if not selected_items:
-            QMessageBox.warning(self, "Atenție", "Vă rugăm selectați un utilizator din listă.")
+            QMessageBox.warning(self, "Atentie", "Va rugam selectati un utilizator din lista.")
             return
 
         self.selected_user = selected_items[0].data(Qt.UserRole)

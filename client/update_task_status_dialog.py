@@ -4,12 +4,12 @@ from PyQt5.QtWidgets import QDialog, QVBoxLayout, QPushButton, QDialogButtonBox
 class UpdateTaskStatusDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setWindowTitle("Actualizează Status Sarcină")
+        self.setWindowTitle("Actualizeaza Status Sarcina")
         self.selected_status = None
 
         self.layout = QVBoxLayout(self)
 
-        self.in_proces_button = QPushButton("În Proces")
+        self.in_proces_button = QPushButton("in Proces")
         self.in_proces_button.clicked.connect(lambda: self.set_status("in proces"))
 
         self.problematic_button = QPushButton("Problematic")

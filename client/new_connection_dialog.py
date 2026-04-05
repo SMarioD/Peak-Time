@@ -4,13 +4,13 @@ from PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QLineEdit, QDialogButt
 class NewConnectionDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setWindowTitle("Adaugă Conexiune Nouă")
+        self.setWindowTitle("Adauga Conexiune Noua")
 
         self.layout = QVBoxLayout(self)
 
         # Camp pentru Email
         self.email_input = QLineEdit()
-        self.layout.addWidget(QLabel("Introduceți email-ul utilizatorului:"))
+        self.layout.addWidget(QLabel("Introduceti email-ul utilizatorului:"))
         self.layout.addWidget(self.email_input)
 
         # Butoane OK si Cancel

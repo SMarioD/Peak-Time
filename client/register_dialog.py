@@ -4,7 +4,7 @@ from PyQt5.QtCore import Qt
 class RegisterDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setWindowTitle("Creează Cont Nou")
+        self.setWindowTitle("Creeaza Cont Nou")
         self.setGeometry(150, 150, 350, 300)
         self.initUI()
 
@@ -25,7 +25,7 @@ class RegisterDialog(QDialog):
 
         self.parola_input = QLineEdit()
         self.parola_input.setEchoMode(QLineEdit.Password)
-        layout.addWidget(QLabel("Parolă:"))
+        layout.addWidget(QLabel("Parola:"))
         layout.addWidget(self.parola_input)
 
         self.rol_combo = QComboBox()
@@ -43,7 +43,7 @@ class RegisterDialog(QDialog):
     def get_data(self):
         if not all(
                 [self.nume_input.text(), self.prenume_input.text(), self.email_input.text(), self.parola_input.text()]):
-            QMessageBox.warning(self, "Câmpuri Incomplete", "Toate câmpurile sunt obligatorii.")
+            QMessageBox.warning(self, "Campuri Incomplete", "Toate campurile sunt obligatorii.")
             return None
 
         return {

@@ -20,13 +20,13 @@ class SharedPlansWindow(QWidget):
 
     def initUI(self):
         layout=QVBoxLayout()
-        layout.addWidget(QLabel("Selectează un calendar parajat pentru a vedea detaliile"))
+        layout.addWidget(QLabel("Selecteaza un calendar parajat pentru a vedea detaliile"))
 
         self.plans_list_widget=QListWidget()
         self.plans_list_widget.itemDoubleClicked.connect(self.on_plan_selected)
         layout.addWidget(self.plans_list_widget)
 
-        self.refresh_button=QPushButton("Reîmprospătează")
+        self.refresh_button=QPushButton("Reimprospateaza")
         self.refresh_button.clicked.connect(self.load_shared_plans)
         layout.addWidget(self.refresh_button)
 
@@ -40,7 +40,7 @@ class SharedPlansWindow(QWidget):
         try:
             response=requests.get(shares_url,headers=headers)
             if response.status_code !=200:
-                self.plans_list_widget.addItem("Eroare la încărcarea partajărilor.")
+                self.plans_list_widget.addItem("Eroare la incarcarea partajarilor.")
                 return
             shares=response.json()
             if not shares:

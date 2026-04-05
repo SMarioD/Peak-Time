@@ -163,7 +163,17 @@
                         <artifactId>kotlin-maven-allopen</artifactId>
                         <version>${kotlin.version}</version>
                     </dependency>
+                    <dependency>
+                        <groupId>org.jetbrains.kotlin</groupId>
+                        <artifactId>kotlin-maven-noarg</artifactId>
+                        <version>${kotlin.version}</version>
+                    </dependency>
                 </dependencies>
+                <configuration>
+                    <compilerPlugins>
+                        <plugin>jpa</plugin>
+                    </compilerPlugins>
+                </configuration>
             </plugin>
         </plugins>
     </build>

@@ -31,4 +31,14 @@ class CalendarService(private val eventRepository: EventRepository, private val 
     fun getSharesForUser(userId: Int): List<CalendarShare> {
         return calendarShareRepository.findBySharedWithUserId(userId)
     }
+
+    fun deleteEvent(eventId: Int, userId: Int) {
+        val event = eventRepository.findById(eventId)
+            .orElseThrow { IllegalArgumentException("Evenimentul nu există.") }
+        if (event.utilizatorId != userId) {
+            throw SecurityException("Nu aveți permisiunea de a șterge acest eveniment.")
+        }
+
+        eventRepository.deleteById(eventId)
+    }
 }

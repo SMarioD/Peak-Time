@@ -8,17 +8,17 @@ import javax.persistence.*
 data class Message(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Int=0,
+    val id: Int = 0,
 
-    @Column(name="sender_id",nullable=false)
-    val senderId:Int,
+    @Column(name="sender_id", nullable = false)
+    val senderId: Int = 0,
 
     @Column(name="receiver_id", nullable = false)
-    val receiverId:Int,
+    val receiverId: Int = 0,
 
     @Column(name="continut", nullable = false, columnDefinition = "TEXT")
-    val continut: String,
+    val continut: String = "",
 
     @Column(name = "timestamp", nullable = false)
-    val timestamp: LocalDateTime=LocalDateTime.now()
+    val timestamp: LocalDateTime = LocalDateTime.now()
 )
