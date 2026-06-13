@@ -53,7 +53,7 @@ open class GoogleCalendarController(
             } catch (e: Exception) {
                 return ResponseEntity.status(404).body(
                     "Eroare: Nu am putut identifica contul Peak Time pentru $googleEmail. " +
-                            "Asigurați-vă că folosiți același email sau reîncercați conectarea din aplicația Python."
+                            "Asigurati-va ca folositi acelasi email sau reincercati conectarea din aplicatia Python."
                 )
             }
         }
@@ -66,7 +66,7 @@ open class GoogleCalendarController(
             val existingToken = userOAuthTokenRepository.findByUserIdAndProvider(userId, "google")
             val userOAuthToken = existingToken?.apply {
                 this.accessToken = accessToken
-                if (refreshToken != null) this.refreshToken = refreshToken
+                if (!refreshToken.isNullOrBlank()) this.refreshToken = refreshToken
                 this.expiresAt = expiresAt
                 this.updatedAt = LocalDateTime.now()
             } ?: UserOAuthToken(
@@ -80,9 +80,9 @@ open class GoogleCalendarController(
             )
 
             userOAuthTokenRepository.save(userOAuthToken)
-            return ResponseEntity.ok("Succes! Contul Google ($googleEmail) a fost legat de Peak Time (ID: $userId). Puteți închide fereastra.")
+            return ResponseEntity.ok("Succes! Contul Google ($googleEmail) a fost legat de Peak Time (ID: $userId). Puteti inchide fereastra.")
         } catch (e: Exception) {
-            return ResponseEntity.status(500).body("Eroare la salvarea token-ului în baza de date: ${e.message}")
+            return ResponseEntity.status(500).body("Eroare la salvarea token-ului in baza de date: ${e.message}")
         }
     }
 
@@ -92,7 +92,7 @@ open class GoogleCalendarController(
         @AuthenticationPrincipal oauth2User: OAuth2User
     ): ResponseEntity<String> {
         val email = oauth2User.getAttribute<String>("email")
-            ?: throw IllegalStateException("Nu s-a putut obține email-ul de la Google.")
+            ?: throw IllegalStateException("Nu s-a putut obtine email-ul de la Google.")
 
         val userResponse = try {
             restTemplate.getForObject(
@@ -100,7 +100,7 @@ open class GoogleCalendarController(
                 UserResponse::class.java
             ) ?: throw Exception("User not found")
         } catch (e: Exception) {
-            return ResponseEntity.status(404).body("Eroare: Utilizatorul cu email-ul $email nu este înregistrat în Peak Time.")
+            return ResponseEntity.status(404).body("Eroare: Utilizatorul cu email-ul $email nu este inregistrat in Peak Time.")
         }
 
         val userId = userResponse.id
@@ -125,7 +125,7 @@ open class GoogleCalendarController(
 
         userOAuthTokenRepository.save(userOAuthToken)
 
-        return ResponseEntity.ok("Autentificare Google Calendar reușită pentru $email! Puteți închide această fereastră.")
+        return ResponseEntity.ok("Autentificare Google Calendar reusita pentru $email! Puteti inchide aceasta fereastra.")
     }
 
     @GetMapping("/google/events")

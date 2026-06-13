@@ -77,7 +77,10 @@ class SharePlanDialog(QDialog):
                 if details_response.status_code == 200:
                     user_details = details_response.json()
                     for user in user_details:
-                        self.connections_combo.addItem(user.get('email'), userData=user)
+                        fname = user.get('prenume', '')
+                        lname = user.get('nume', '')
+                        full_name = f"{fname} {lname}".strip() or user.get('email')
+                        self.connections_combo.addItem(full_name, userData=user)
         except requests.exceptions.RequestException as e:
             QMessageBox.critical(self, "Eroare de Conexiune", str(e))
 

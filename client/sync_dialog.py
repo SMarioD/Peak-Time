@@ -66,7 +66,10 @@ class SyncDialog(QDialog):
                     details_response = requests.post(details_url, headers=headers, json=list(partner_ids))
                     if details_response.status_code == 200:
                         for user in details_response.json():
-                            item = QListWidgetItem(user.get('email'))
+                            fname = user.get('prenume', '')
+                            lname = user.get('nume', '')
+                            full_name = f"{fname} {lname}".strip() or user.get('email')
+                            item = QListWidgetItem(full_name)
                             item.setData(Qt.UserRole, user)
                             self.connections_list.addItem(item)
         except requests.exceptions.RequestException as e:

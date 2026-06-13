@@ -88,7 +88,7 @@
             <version>${google-http-client.version}</version>
         </dependency>
 
-        <!-- Persistență Date pentru token-uri -->
+        <!-- Persistenta Date pentru token-uri -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>

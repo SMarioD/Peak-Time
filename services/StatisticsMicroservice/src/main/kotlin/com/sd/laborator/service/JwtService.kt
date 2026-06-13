@@ -5,7 +5,7 @@ import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.authority.SimpleGrantedAuthority
-import org.springframework.security.core.userdetails.User // Import corect din Spring Security
+import org.springframework.security.core.userdetails.User
 import org.springframework.stereotype.Service
 import java.security.Key
 import java.util.*

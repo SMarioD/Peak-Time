@@ -65,6 +65,13 @@ open class GatewayConfig {
                     }
                     .uri("http://statistics-service:8080")
             }
+            .route("team-service-route") { r ->
+                r.path("/api/v1/teams/**")
+                    .filters { f ->
+                        f.filter(authFilter.apply(AuthenticationFilter.Config()))
+                    }
+                    .uri("http://team-service:8080")
+            }
             .route("external-calendar-service-route") { r ->
                 r.path("/api/v1/external-calendar/**")
                     .filters { f ->

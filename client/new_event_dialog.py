@@ -5,32 +5,34 @@ class NewEventDialog(QDialog):
     def __init__(self, start_date, end_date=None, parent=None):
         super().__init__(parent)
         self.setWindowTitle("Adaugă Eveniment Nou")
-        self.layout = QVBoxLayout(self)
+        self.setFixedWidth(320)
+
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(20, 16, 20, 16)
+        layout.setSpacing(6)
 
         if end_date is None:
             end_date = start_date
 
+        layout.addWidget(QLabel("Titlu:"))
         self.title_input = QLineEdit()
-        self.layout.addWidget(QLabel("Titlu:"))
-        self.layout.addWidget(self.title_input)
+        layout.addWidget(self.title_input)
 
-        # Data început
+        layout.addWidget(QLabel("Data început:"))
         self.start_datetime_input = QDateTimeEdit(start_date.startOfDay().addSecs(8 * 3600))
         self.start_datetime_input.setCalendarPopup(True)
-        self.layout.addWidget(QLabel("Data Început:"))
-        self.layout.addWidget(self.start_datetime_input)
+        layout.addWidget(self.start_datetime_input)
 
-        # Data sfârșit
+        layout.addWidget(QLabel("Data Sfârșit:"))
         self.end_datetime_input = QDateTimeEdit(end_date.startOfDay().addSecs(9 * 3600))
         self.end_datetime_input.setCalendarPopup(True)
-        self.layout.addWidget(QLabel("Data Sfârșit:"))
-        self.layout.addWidget(self.end_datetime_input)
+        layout.addWidget(self.end_datetime_input)
 
+        layout.addSpacing(4)
         self.buttons = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel, self)
         self.buttons.accepted.connect(self.accept)
         self.buttons.rejected.connect(self.reject)
-        self.layout.addWidget(self.buttons)
-
+        layout.addWidget(self.buttons)
     def get_data(self):
         return {
             "titlu": self.title_input.text(),

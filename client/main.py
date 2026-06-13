@@ -5,230 +5,158 @@ os.environ["QT_LOGGING_RULES"] = "*.debug=false;qt.qpa.wayland.debug=false"
 os.environ["XDG_SESSION_TYPE"] = "x11"
 import json
 import requests
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QMessageBox, QDialog
+from PyQt5.QtWidgets import (QApplication, QWidget, QLabel, QLineEdit,
+                             QPushButton, QVBoxLayout, QHBoxLayout,
+                             QMessageBox, QDialog, QFrame)
 from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QFont
+
+from theme import SuccessDialog
 from main_window import MainWindow
 from register_dialog import RegisterDialog
+from theme import STYLESHEET, apply_palette
+from gantt_window import GanttWindow
 
-
-STYLESHEET = """
-/* ----- Fereastra Principala & Dialoguri ----- */
-QWidget, QDialog {
-    background-color: #2b2b2b;
-    color: #dcdcdc;
-    font-family: "Segoe UI", Arial, sans-serif;
-}
-
-/* ----- Etichete ----- */
-QLabel {
-    font-size: 14px;
-    color: #a9b7c6;
-}
-QLabel#titleLabel {
-    font-size: 26px;
-    font-weight: bold;
-    color: #ffffff;
-    padding-bottom: 10px;
-}
-
-/* ----- Campuri de Text ----- */
-QLineEdit {
-    background-color: #3c3e41;
-    border: 1px solid #555555;
-    padding: 10px;
-    border-radius: 5px;
-    font-size: 14px;
-    color: #dcdcdc;
-}
-QLineEdit:focus {
-    border: 1px solid #007ACC;
-}
-
-/* ----- Dropdown----- */
-QComboBox {
-    background-color: #3c3e41;
-    border: 1px solid #555555;
-    padding: 8px;
-    border-radius: 5px;
-    font-size: 14px;
-}
-QComboBox::drop-down {
-    border: none;
-}
-QComboBox QAbstractItemView {
-    background-color: #3c3e41;
-    selection-background-color: #007ACC;
-    border: 1px solid #555555;
-}
-
-/* ----- Butoane ----- */
-QPushButton {
-    background-color: #007ACC;
-    color: white;
-    border: none;
-    padding: 12px;
-    border-radius: 5px;
-    font-size: 16px;
-    font-weight: bold;
-}
-QPushButton:hover {
-    background-color: #008ae6;
-}
-QPushButton:pressed {
-    background-color: #005A9E;
-}
-/* ----- Stil specific pentru butonul de inregistrare ----- */
-QPushButton#registerButton {
-    background-color: transparent;
-    border: none;
-    color: #0099FF;
-    font-size: 12px;
-    font-weight: normal;
-    text-align: center;
-    padding-top: 10px;
-}
-QPushButton#registerButton:hover {
-    color: #FFFFFF;
-    text-decoration: underline;
-}
-
-/* ----- Butoanele OK/Cancel din dialoguri ----- */
-QDialogButtonBox QPushButton {
-    min-width: 80px;
-}
-
-QCalendarWidget QWidget {
-    alternate-background-color: #3c3e41;
-}
-QCalendarWidget QToolButton {
-    color: #dcdcdc;
-    background-color: transparent;
-    border: none;
-    padding: 5px;
-    font-size: 14px;
-    font-weight: bold;
-}
-QCalendarWidget QToolButton:hover {
-    background-color: #555555;
-    border-radius: 4px;
-}
-QCalendarWidget QAbstractItemView {
-    selection-background-color: #007ACC;
-    selection-color: #ffffff;
-}
-QCalendarWidget QAbstractItemView:enabled QTableView::item:first-child,
-QCalendarWidget QAbstractItemView:enabled QTableView::item:last-child {
-    color: #cc7832;
-}
-
-QCalendarWidget QAbstractItemView:enabled {
-    color: #dcdcdc;
-    selection-background-color: #007ACC;
-    selection-color: #ffffff;
-}
-QCalendarWidget QAbstractItemView:disabled {
-    color: #2b2b2b;
-}
-"""
 
 class LoginWindow(QWidget):
     def __init__(self):
         super().__init__()
         self.setObjectName("loginWindow")
-        self.setWindowTitle("Autentificare - Peak Time")
-        self.setGeometry(100,100,350,320)
+        self.setWindowTitle("Peak Time")
+        self.setFixedSize(400, 480)
         self.initUI()
-        self.main_win=None
+        self.main_win = None
 
     def initUI(self):
-        layout=QVBoxLayout()
+        outer = QVBoxLayout(self)
+        outer.setContentsMargins(0, 0, 0, 0)
 
-        #Camp pentru Email
-        self.email_input = QLineEdit(self)
-        self.email_input.setPlaceholderText("Email")
+        card = QFrame(self)
+        card.setObjectName("loginCard")
+        card.setStyleSheet("""
+            QFrame#loginCard {
+                background-color: #1a1a24;
+                border: 1px solid #2e2c4a;
+                border-radius: 16px;
+            }
+        """)
+        outer.addWidget(card, alignment=Qt.AlignCenter)
+
+        layout = QVBoxLayout(card)
+        layout.setContentsMargins(40, 24, 40, 24)
+        layout.setSpacing(10)
+
+        logo_row = QHBoxLayout()
+        dot = QLabel("⬡")
+        dot.setStyleSheet("font-size: 24px; color: #7c6af7; background: transparent;")
+        title = QLabel("Peak Time")
+        title.setStyleSheet("""
+            font-size: 22px;
+            font-weight: 700;
+            color: #e8e6f4;
+            background: transparent;
+            letter-spacing: -0.5px;
+        """)
+        logo_row.addWidget(dot)
+        logo_row.addWidget(title)
+        logo_row.addStretch()
+        layout.addLayout(logo_row)
+
+        subtitle = QLabel("Autentifică-te în cont")
+        subtitle.setStyleSheet("color: #5e5c78; font-size: 13px; background: transparent; margin-bottom: 8px;")
+        layout.addWidget(subtitle)
+
+        sep = QFrame()
+        sep.setFrameShape(QFrame.HLine)
+        sep.setStyleSheet("color: #2e2c4a; background: #2e2c4a; border: none; max-height: 1px;")
+        layout.addWidget(sep)
+        layout.addSpacing(4)
+
+        email_label = QLabel("Email")
+        email_label.setStyleSheet("color: #9e9cbd; font-size: 12px; font-weight: 600; background: transparent;")
+        layout.addWidget(email_label)
+
+        self.email_input = QLineEdit()
+        self.email_input.setPlaceholderText("nume@exemplu.com")
+        self.email_input.setFixedHeight(42)
         layout.addWidget(self.email_input)
+        pass_label = QLabel("Parolă")
+        pass_label.setStyleSheet("color: #9e9cbd; font-size: 12px; font-weight: 600; background: transparent;")
+        layout.addWidget(pass_label)
 
-        #Camp pentru parola
-        self.password_input = QLineEdit(self)
-        self.password_input.setPlaceholderText("Parola")
+        self.password_input = QLineEdit()
+        self.password_input.setPlaceholderText("••••••••")
         self.password_input.setEchoMode(QLineEdit.Password)
+        self.password_input.setFixedHeight(42)
+        self.password_input.returnPressed.connect(self.handle_login)
         layout.addWidget(self.password_input)
 
-        layout.addSpacing(10)
 
-        #Buton de login
-        self.login_button=QPushButton("Autentificare",self)
+        self.login_button = QPushButton("Autentificare")
+        self.login_button.setFixedHeight(44)
+        self.login_button.setCursor(Qt.PointingHandCursor)
         self.login_button.clicked.connect(self.handle_login)
         layout.addWidget(self.login_button)
 
-        # Buton de inregistrare
-        self.register_button = QPushButton("Nu ai cont? Creeaza unul acum", self)
-        self.register_button.setObjectName("registerButton")
-        self.register_button.clicked.connect(self.handle_register_dialog)
-        layout.addWidget(self.register_button)
+        sep2 = QFrame()
+        sep2.setFrameShape(QFrame.HLine)
+        sep2.setStyleSheet("color: #2e2c4a; background: #2e2c4a; border: none; max-height: 1px; margin-top: 4px;")
+        layout.addWidget(sep2)
 
-        self.setLayout(layout)
+        self.register_button = QPushButton("Nu ai cont? Creează unul acum")
+        self.register_button.setObjectName("registerButton")
+        self.register_button.setCursor(Qt.PointingHandCursor)
+        self.register_button.clicked.connect(self.handle_register_dialog)
+        layout.addWidget(self.register_button, alignment=Qt.AlignCenter)
+        card.setFixedSize(360, 400)
 
     def handle_register_dialog(self):
-        dialog=RegisterDialog(self)
-        if dialog.exec_()==QDialog.Accepted:
-            data=dialog.get_data()
+        dialog = RegisterDialog(self)
+        if dialog.exec_() == QDialog.Accepted:
+            data = dialog.get_data()
             if data:
-                register_url="http://localhost:8080/api/v1/auth/register"
                 try:
-                    response=requests.post(register_url, json=data)
-                    if response.status_code==201:
-                        QMessageBox.information(self,"Succes","Contul a fost creat cu succes! Va puteti autentifica acum.")
+                    response = requests.post("http://localhost:8080/api/v1/auth/register", json=data)
+                    if response.status_code == 201:
+                        SuccessDialog("Contul a fost creat! Te poți autentifica acum.", self).exec_()
                     else:
-                        error_data=response.json()
-                        QMessageBox.critical(self,"Eroare la inregistrare",error_data.get("error","A aparut o eroare."))
+                        error_data = response.json()
+                        QMessageBox.critical(self, "Eroare la înregistrare", error_data.get("error", "A apărut o eroare."))
                 except requests.exceptions.RequestException as e:
-                    QMessageBox.critical(self,"Eoare de conexiune",str(e))
-
+                    QMessageBox.critical(self, "Eroare de conexiune", str(e))
 
     def handle_login(self):
-        email=self.email_input.text()
-        parola=self.password_input.text()
+        email = self.email_input.text().strip()
+        parola = self.password_input.text()
 
         if not email or not parola:
-            QMessageBox.warning(self,"Eroare","Va rugam introduceti email si parola.")
+            QMessageBox.warning(self, "Câmpuri incomplete", "Te rugăm introduceți email și parolă.")
             return
 
-        login_url="http://localhost:8080/api/v1/auth/login"
-
-        payload={
-            "email":email,
-            "parola":parola
-        }
-
         try:
-            response = requests.post(login_url, json=payload)
+            response = requests.post(
+                "http://localhost:8080/api/v1/auth/login",
+                json={"email": email, "parola": parola}
+            )
+            if response.status_code == 200:
+                data = response.json()
+                jwt_token = data.get("token")
+                user_id   = data.get("userId")
+                user_role = data.get("rol")
 
-            if response.status_code==200:
-                response_data=response.json()
-                jwt_token=response_data.get("token")
-                user_id = response_data.get("userId")
-                user_role = response_data.get("rol")
-
-                print(f"Login reusit! Token: {jwt_token}")
-
-                QMessageBox.information(self,"Succes","Autentificare reusita!")
-
-                self.main_win=MainWindow(jwt_token,user_id,user_role)
+                self.main_win = MainWindow(jwt_token, user_id, user_role)
                 self.main_win.show()
                 self.close()
             else:
                 try:
-                    error_data = response.json()
-                    error_message = error_data.get("error", "A aparut o eroare necunoscuta.")
+                    error_msg = response.json().get("error", "Eroare necunoscută.")
                 except json.JSONDecodeError:
-                    error_message = f"Raspuns server non-JSON: {response.text}"
-                except Exception as ex:
-                    error_message = f"Eroare la parsarea raspunsului de eroare: {ex}. Raspuns: {response.text}"
-
-                QMessageBox.critical(self, "Eroare de Autentificare", error_message)
+                    error_msg = f"Răspuns non-JSON: {response.text}"
+                QMessageBox.critical(self, "Autentificare eșuată", error_msg)
         except requests.exceptions.RequestException as e:
-            QMessageBox.critical(self, "Eroare de Conexiune", f"Nu s-a putut realiza conexiunea cu serverul: {e}")
+            QMessageBox.critical(self, "Eroare de conexiune", str(e))
+
+    
 
 
 if __name__ == '__main__':
@@ -236,11 +164,10 @@ if __name__ == '__main__':
     QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
 
     app = QApplication(sys.argv)
+
     app.setStyleSheet(STYLESHEET)
+    apply_palette(app)
+
     login_win = LoginWindow()
     login_win.show()
     sys.exit(app.exec_())
-
-
-
-

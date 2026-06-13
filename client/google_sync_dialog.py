@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import (QDialog, QVBoxLayout, QLabel, QPushButton,
                              QDialogButtonBox, QMessageBox)
 from PyQt5.QtGui import QDesktopServices
 from PyQt5.QtCore import QUrl, Qt, QTimer
+from theme import SuccessDialog
 
 
 class GoogleSyncDialog(QDialog):
@@ -78,7 +79,7 @@ class GoogleSyncDialog(QDialog):
 
             response = requests.post(import_url, headers=headers)
             if response.status_code == 200:
-                QMessageBox.information(self, "Succes", "Evenimentele Google au fost importate!")
+                SuccessDialog("Evenimentele Google au fost importate!", self).exec_()
                 self.accept()
             else:
                 QMessageBox.critical(self, "Eroare", f"Importul a esuat: {response.text}")

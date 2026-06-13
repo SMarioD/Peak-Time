@@ -2,6 +2,7 @@ import requests
 from PyQt5.QtWidgets import (QDialog, QVBoxLayout, QLabel, QLineEdit, QListWidget,
                              QPushButton, QMessageBox, QListWidgetItem)
 from PyQt5.QtCore import Qt
+from theme import InfoDialog
 
 
 class SendMessageDialog(QDialog):
@@ -69,7 +70,8 @@ class SendMessageDialog(QDialog):
             details_response = requests.post(details_url, headers=headers, json=list(partner_ids))
             if details_response.status_code == 200:
                 for user in details_response.json():
-                    list_item = QListWidgetItem(user.get('email'))
+                    full_name = f"{user.get('prenume', '')} {user.get('nume', '')}".strip() or user.get('email')
+                    list_item = QListWidgetItem(full_name)
                     list_item.setData(Qt.UserRole, user)
                     self.user_list_widget.addItem(list_item)
 
@@ -91,7 +93,7 @@ class SendMessageDialog(QDialog):
                 list_item.setData(Qt.UserRole, user_data)
                 self.user_list_widget.addItem(list_item)
             else:
-                QMessageBox.information(self, "Rezultat", "Niciun utilizator gasit cu acest email.")
+                InfoDialog("Rezultat", "Niciun utilizator gasit cu acest email.", self).exec_()
         except requests.exceptions.RequestException as e:
             QMessageBox.critical(self, "Eroare de Conexiune", str(e))
 

@@ -9,12 +9,11 @@ import com.google.api.services.calendar.model.Event
 import com.google.api.services.calendar.model.EventDateTime
 import com.sd.laborator.model.UserOAuthToken
 import com.sd.laborator.repository.UserOAuthTokenRepository
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 import java.time.LocalDateTime
 import java.time.ZoneOffset
-import org.springframework.beans.factory.annotation.Value
-import java.time.OffsetDateTime
 
 @Service
 open class GoogleCalendarService(private val userOAuthTokenRepository: UserOAuthTokenRepository) {
@@ -29,40 +28,45 @@ open class GoogleCalendarService(private val userOAuthTokenRepository: UserOAuth
     private val jsonFactory = GsonFactory.getDefaultInstance()
     private val httpTransport = GoogleNetHttpTransport.newTrustedTransport()
     private val restTemplate = RestTemplate()
-    private val calendarServiceUrl = "http://calendar-service:8080/api/v1/calendar/events"
 
-
-    private fun getCalendarClient(token: UserOAuthToken): Calendar {
-        val credential = GoogleCredential.Builder()
+    private fun buildCredential(token: UserOAuthToken): GoogleCredential {
+        return GoogleCredential.Builder()
             .setTransport(httpTransport)
             .setJsonFactory(jsonFactory)
             .setClientSecrets(clientId, clientSecret)
             .build()
             .setAccessToken(token.accessToken)
             .setRefreshToken(token.refreshToken)
+    }
+
+    private fun getCalendarClient(token: UserOAuthToken): Calendar {
         val now = LocalDateTime.now()
-        if (token.expiresAt == null || token.expiresAt!!.isBefore(now.plusMinutes(5))) {
+        val needsRefresh = token.expiresAt == null || token.expiresAt!!.isBefore(now.plusMinutes(5))
 
+        if (needsRefresh) {
             if (token.refreshToken.isNullOrBlank()) {
-                throw IllegalStateException("Refresh Token lipsește din baza de date. Utilizatorul trebuie să se reconecteze.")
-            }
-
-            println("DEBUG: Se încearcă refresh real pentru user ${token.userId}...")
-            try {
-                credential.refreshToken()
-                token.accessToken = credential.accessToken
-                token.expiresAt = now.plusSeconds(credential.expiresInSeconds ?: 3600L)
-                token.updatedAt = now
-
-                userOAuthTokenRepository.save(token)
-                println("DEBUG: Token-ul a fost salvat cu succes în DB.")
-            } catch (e: Exception) {
-                println("ERROR: Google a respins Refresh Token-ul: ${e.message}")
-                throw e
+                println("WARN: Refresh Token lipseste pentru user ${token.userId}. Se incearca cu access token existent.")
+            } else {
+                println("DEBUG: Token expirat/aproape expirat pentru user ${token.userId}. Se face refresh...")
+                try {
+                    val credential = buildCredential(token)
+                    val refreshed = credential.refreshToken()
+                    if (refreshed) {
+                        token.accessToken = credential.accessToken
+                        token.expiresAt = now.plusSeconds(credential.expiresInSeconds ?: 3600L)
+                        token.updatedAt = now
+                        userOAuthTokenRepository.save(token)
+                        println("DEBUG: Token refreshat cu succes pentru user ${token.userId}.")
+                    } else {
+                        println("WARN: refreshToken() a returnat false pentru user ${token.userId}.")
+                    }
+                } catch (e: Exception) {
+                    println("ERROR: Refresh esuat pentru user ${token.userId}: ${e.message}")
+                }
             }
         }
-        credential.accessToken = token.accessToken
 
+        val credential = buildCredential(token)
         return Calendar.Builder(httpTransport, jsonFactory, credential)
             .setApplicationName(applicationName)
             .build()
@@ -71,31 +75,36 @@ open class GoogleCalendarService(private val userOAuthTokenRepository: UserOAuth
     fun getGoogleCalendarEvents(userId: Int): List<Event> {
         val userToken = userOAuthTokenRepository.findByUserIdAndProvider(userId, "google")
             ?: return emptyList()
+
         return try {
             val client = getCalendarClient(userToken)
             executeListRequest(client)
         } catch (e: com.google.api.client.googleapis.json.GoogleJsonResponseException) {
             if (e.statusCode == 401) {
-                println("DEBUG: Token 401 la cerere. Forțăm refresh manual...")
-                userToken.expiresAt = LocalDateTime.now().minusHours(1)
-
-                val freshClient = getCalendarClient(userToken)
-
-                try {
-                    executeListRequest(freshClient)
-                } catch (e2: Exception) {
-                    println("ERROR: Nici după refresh nu a mers: ${e2.message}")
+                println("DEBUG: 401 la cerere pentru user $userId. Fortam refresh...")
+                if (!userToken.refreshToken.isNullOrBlank()) {
+                    userToken.expiresAt = LocalDateTime.now().minusHours(1)
+                    return try {
+                        val freshClient = getCalendarClient(userToken)
+                        executeListRequest(freshClient)
+                    } catch (e2: Exception) {
+                        println("ERROR: Nici dupa refresh fortat nu a mers pentru user $userId: ${e2.message}")
+                        emptyList()
+                    }
+                } else {
+                    println("ERROR: 401 si nu exista refresh token pentru user $userId. Necesita reconectare.")
                     emptyList()
                 }
             } else {
-                println("ERROR: Eroare Google API: ${e.message}")
+                println("ERROR: Google API error pentru user $userId: ${e.message}")
                 emptyList()
             }
         } catch (e: Exception) {
-            println("ERROR: Eroare neașteptată: ${e.message}")
+            println("ERROR: Exceptie neasteptata pentru user $userId: ${e.message}")
             emptyList()
         }
     }
+
     private fun executeListRequest(client: Calendar): List<Event> {
         val twoMonthsAgo = System.currentTimeMillis() - (60L * 24 * 60 * 60 * 1000)
         val events = client.events().list("primary")
@@ -108,13 +117,17 @@ open class GoogleCalendarService(private val userOAuthTokenRepository: UserOAuth
 
     fun createGoogleCalendarEvent(userId: Int, eventTitle: String, startTime: LocalDateTime, endTime: LocalDateTime): Event {
         val userToken = userOAuthTokenRepository.findByUserIdAndProvider(userId, "google")
-            ?: throw IllegalStateException("Token OAuth Google nu a fost găsit pentru utilizator $userId")
+            ?: throw IllegalStateException("Token OAuth Google nu a fost gasit pentru utilizator $userId")
         val client = getCalendarClient(userToken)
 
         val event = Event()
             .setSummary(eventTitle)
-            .setStart(EventDateTime().setDateTime(DateTime(startTime.atZone(ZoneOffset.UTC).toInstant().toEpochMilli())).setTimeZone("Europe/Bucharest"))
-            .setEnd(EventDateTime().setDateTime(DateTime(endTime.atZone(ZoneOffset.UTC).toInstant().toEpochMilli())).setTimeZone("Europe/Bucharest"))
+            .setStart(EventDateTime()
+                .setDateTime(DateTime(startTime.atZone(ZoneOffset.UTC).toInstant().toEpochMilli()))
+                .setTimeZone("Europe/Bucharest"))
+            .setEnd(EventDateTime()
+                .setDateTime(DateTime(endTime.atZone(ZoneOffset.UTC).toInstant().toEpochMilli()))
+                .setTimeZone("Europe/Bucharest"))
 
         return client.events().insert("primary", event).execute()
     }
@@ -136,7 +149,6 @@ open class GoogleCalendarService(private val userOAuthTokenRepository: UserOAuth
         }
 
         val existingKeys = existingInternalEvents.map { "${it["titlu"]}_${it["dataInceput"]}" }.toSet()
-
         val googleEvents = getGoogleCalendarEvents(userId)
 
         googleEvents.forEach { gEvent ->
@@ -154,14 +166,20 @@ open class GoogleCalendarService(private val userOAuthTokenRepository: UserOAuth
                 val payload = mapOf(
                     "titlu" to (gEvent.summary ?: "Eveniment Google"),
                     "dataInceput" to startClean,
-                    "dataSfarsit" to (if (end.toStringRfc3339().contains("T")) end.toStringRfc3339().substring(0, 19) else end.toStringRfc3339() + "T23:59:59")
+                    "dataSfarsit" to (if (end.toStringRfc3339().contains("T"))
+                        end.toStringRfc3339().substring(0, 19)
+                    else
+                        end.toStringRfc3339() + "T23:59:59")
                 )
 
-                restTemplate.postForObject("http://calendar-service:8080/api/v1/calendar/events", org.springframework.http.HttpEntity(payload, headers), String::class.java)
+                restTemplate.postForObject(
+                    "http://calendar-service:8080/api/v1/calendar/events",
+                    org.springframework.http.HttpEntity(payload, headers),
+                    String::class.java
+                )
                 println("Automat: Importat '${gEvent.summary}' pentru user $userId")
-
             } catch (e: Exception) {
-                println("Eroare la procesarea unui eveniment: ${e.message}")
+                println("Eroare la procesarea unui eveniment pentru user $userId: ${e.message}")
             }
         }
     }

@@ -5,36 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8951b3be-d233-4116-b101-f2699e2aaed2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../../client/chat_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/chat_window.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../client/google_sync_dialog.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/google_sync_dialog.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../client/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../client/main_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/main_window.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../client/new_connection_dialog.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/new_connection_dialog.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../client/new_event_dialog.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/new_event_dialog.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../client/register_dialog.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/register_dialog.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../client/send_message_dialog.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/send_message_dialog.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../client/share_plan_dialog.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/share_plan_dialog.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../client/shared_plan_details_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/shared_plan_details_window.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../client/shared_plans_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/shared_plans_window.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../client/statistics_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/statistics_window.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../client/sync_dialog.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/sync_dialog.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../client/tasks_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/tasks_window.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../client/team_management_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/team_management_window.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../client/update_task_status_dialog.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/update_task_status_dialog.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../../docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ExternalCalendarMicroservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ExternalCalendarMicroservice/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ExternalCalendarMicroservice/src/main/kotlin/com/sd/laborator/controller/GoogleCalendarController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../ExternalCalendarMicroservice/src/main/kotlin/com/sd/laborator/controller/GoogleCalendarController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ExternalCalendarMicroservice/src/main/kotlin/com/sd/laborator/model/UserOAuthToken.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../ExternalCalendarMicroservice/src/main/kotlin/com/sd/laborator/model/UserOAuthToken.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ExternalCalendarMicroservice/src/main/kotlin/com/sd/laborator/service/GoogleCalendarService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../ExternalCalendarMicroservice/src/main/kotlin/com/sd/laborator/service/GoogleCalendarService.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ExternalCalendarMicroservice/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../ExternalCalendarMicroservice/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/controller/MessageController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/controller/MessageController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/model/Message.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/model/Message.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/service/KafkaConsumerService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/service/KafkaConsumerService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/service/KafkaProducerService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/sd/laborator/service/KafkaProducerService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../PlanningMicroservice/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../PlanningMicroservice/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../PlanningMicroservice/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../PlanningMicroservice/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../StatisticsMicroservice/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../StatisticsMicroservice/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../StatisticsMicroservice/src/main/kotlin/com/sd/laborator/model/TaskEvent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../StatisticsMicroservice/src/main/kotlin/com/sd/laborator/model/TaskEvent.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../StatisticsMicroservice/src/main/kotlin/com/sd/laborator/service/JwtService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../StatisticsMicroservice/src/main/kotlin/com/sd/laborator/service/JwtService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../StatisticsMicroservice/src/main/kotlin/com/sd/laborator/service/StatisticsService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../StatisticsMicroservice/src/main/kotlin/com/sd/laborator/service/StatisticsService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../StatisticsMicroservice/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../StatisticsMicroservice/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TaskManagerMicroservice/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../TaskManagerMicroservice/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TaskManagerMicroservice/src/main/kotlin/com/sd/laborator/controller/TaskController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../TaskManagerMicroservice/src/main/kotlin/com/sd/laborator/controller/TaskController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TaskManagerMicroservice/src/main/kotlin/com/sd/laborator/model/Task.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../TaskManagerMicroservice/src/main/kotlin/com/sd/laborator/model/Task.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TaskManagerMicroservice/src/main/kotlin/com/sd/laborator/model/TaskRequest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../TaskManagerMicroservice/src/main/kotlin/com/sd/laborator/model/TaskRequest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TaskManagerMicroservice/src/main/kotlin/com/sd/laborator/repository/TaskRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../TaskManagerMicroservice/src/main/kotlin/com/sd/laborator/repository/TaskRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TaskManagerMicroservice/src/main/kotlin/com/sd/laborator/service/TaskService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../TaskManagerMicroservice/src/main/kotlin/com/sd/laborator/service/TaskService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TaskManagerMicroservice/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../TaskManagerMicroservice/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,7 +71,7 @@
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/mario/Local_Disk_Storage/LICENTA/Peak-Time/services/CalendarMicroservice",
+    "last_opened_file_path": "/home/mario/Local_Disk_Storage/LICENTA/Peak-Time/services/PlanningMicroservice",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -133,6 +122,7 @@
       <workItem from="1774870228943" duration="2328000" />
       <workItem from="1774873817675" duration="1170000" />
       <workItem from="1775340582044" duration="1232000" />
+      <workItem from="1778187159519" duration="95000" />
     </task>
     <servers />
   </component>

@@ -17,6 +17,12 @@ from share_plan_dialog import SharePlanDialog
 from shared_plans_window import SharedPlansWindow
 from sync_dialog import SyncDialog
 from statistics_window import StatisticsWindow
+from gantt_window import GanttWindow
+from team_board_window import TeamBoardWindow
+from teams_hub_window import TeamsHubWindow
+from theme import SuccessDialog
+from theme import SuccessDialog, InfoDialog
+
 
 class CustomCalendar(QCalendarWidget):
     def __init__(self, parent=None):
@@ -168,20 +174,17 @@ class MainWindow(QWidget):
         self.connections_timer.start(30000)
 
     def initUI(self):
-        main_layout = QHBoxLayout()
+        main_layout = QHBoxLayout(self)
 
-        # --- Stânga: Conexiuni ---
+        # --- Sidebar Stânga: Conexiuni ---
         left_layout = QVBoxLayout()
+        left_layout.addWidget(QLabel("<b>👥 CONEXIUNILE TALE:</b>"))
+
         self.connections_list_widget = QListWidget()
-        self.connections_list_widget.setMaximumWidth(180)
+        self.connections_list_widget.setMaximumWidth(220)
         self.connections_list_widget.itemDoubleClicked.connect(self.on_connection_selected)
-        left_layout.addWidget(QLabel("Conexiunile tale:"))
         left_layout.addWidget(self.connections_list_widget)
 
-        self.refresh_connections_button = QPushButton("Reîmprospătează")
-        self.refresh_connections_button.setFixedWidth(180)
-        self.refresh_connections_button.clicked.connect(self.load_connections)
-        left_layout.addWidget(self.refresh_connections_button)
         main_layout.addLayout(left_layout, 1)
 
         # --- Centru: Calendar ---
@@ -196,17 +199,18 @@ class MainWindow(QWidget):
         self.daily_events_list = QListWidget()
         self.daily_events_list.setContextMenuPolicy(Qt.CustomContextMenu)
         self.daily_events_list.customContextMenuRequested.connect(self.show_context_menu)
-
-        self.daily_events_list.setMaximumHeight(80)
+        self.daily_events_list.setMaximumHeight(100)
         self.daily_events_list.setStyleSheet("background-color: transparent; border-top: 1px solid #444;")
 
         center_layout.addWidget(self.daily_events_list, stretch=0)
         main_layout.addLayout(center_layout, stretch=4)
 
+        # --- Dreapta: Meniu Burger ---
         right_layout = QVBoxLayout()
         right_layout.setAlignment(Qt.AlignTop)
         self.menu_button = QPushButton("☰", self)
-        self.menu_button.setFixedSize(40, 40)
+        self.menu_button.setFixedSize(45, 45)
+        self.menu_button.setStyleSheet("font-size: 20px; background-color: #2D2B45; border-radius: 5px;")
         self.menu_button.clicked.connect(self.show_menu)
         right_layout.addWidget(self.menu_button)
         main_layout.addLayout(right_layout, 0)
@@ -275,7 +279,7 @@ class MainWindow(QWidget):
             try:
                 response = requests.delete(url, headers=headers)
                 if response.status_code == 200:
-                    QMessageBox.information(self, "Succes", "Evenimentul a fost șters.")
+                    SuccessDialog("Evenimentul a fost șters.", self).exec_()
                     self.load_calendar_events()  # Reîncărcăm lista automat
                 else:
                     QMessageBox.critical(self, "Eroare", f"Nu s-a putut șterge: {response.text}")
@@ -298,7 +302,7 @@ class MainWindow(QWidget):
                 response = requests.post("http://localhost:8080/api/v1/calendar/events", headers=headers,
                                          json=event_data)
                 if response.status_code == 201:
-                    QMessageBox.information(self, "Succes", "Eveniment adăugat!")
+                    SuccessDialog("Eveniment adăugat!", self).exec_()
                     self.load_calendar_events()
                 else:
                     QMessageBox.critical(self, "Eroare", f"Eroare server: {response.text}")
@@ -310,38 +314,52 @@ class MainWindow(QWidget):
         headers = {"Authorization": f"Bearer {self.jwt_token}"}
         try:
             response = requests.get(connections_url, headers=headers)
-            if response.status_code == 200:
-                connections = response.json()
-                current_row = self.connections_list_widget.currentRow()
-                self.connections_list_widget.clear()
+            if response.status_code != 200:
+                return
 
-                # Colectăm ID-urile partenerilor pentru a lua detaliile (email)
-                partner_ids = {
-                    conn.get('utilizator1Id') if conn.get('utilizator2Id') == self.current_user_id else conn.get(
-                        'utilizator2Id') for conn in connections}
-                user_details_map = {}
-                if partner_ids:
-                    details_url = "http://localhost:8080/api/v1/auth/users/details"
-                    details_response = requests.post(details_url, headers=headers, json=list(partner_ids))
-                    if details_response.status_code == 200:
-                        user_details_map = {u.get('id'): u.get('email') for u in details_response.json()}
+            connections = response.json()
+            current_row = self.connections_list_widget.currentRow()
+            self.connections_list_widget.clear()
 
-                for conn in connections:
-                    p_id = conn.get('utilizator1Id') if conn.get('utilizator2Id') == self.current_user_id else conn.get(
-                        'utilizator2Id')
-                    email = user_details_map.get(p_id, f"User {p_id}")
-                    status = conn.get('status')
-                    display_status = "⌛" if status == "asteptare" else "✅"
+            if not connections:
+                self.connections_list_widget.addItem("Nicio conexiune.")
+                return
 
-                    item = QListWidgetItem(f"{email} {display_status}")
-                    item.setData(Qt.UserRole, conn)
-                    if status == 'asteptare' and conn.get('utilizator2Id') == self.current_user_id:
-                        item.setBackground(Qt.yellow)
-                    self.connections_list_widget.addItem(item)
+            partner_ids = {
+                conn.get('utilizator1Id') if conn.get('utilizator2Id') == self.current_user_id
+                else conn.get('utilizator2Id') for conn in connections
+            }
 
-                if current_row >= 0: self.connections_list_widget.setCurrentRow(current_row)
+            user_details_map = {}
+            if partner_ids:
+                details_url = "http://localhost:8080/api/v1/auth/users/details"
+                details_response = requests.post(details_url, headers=headers, json=list(partner_ids))
+                if details_response.status_code == 200:
+                    for user in details_response.json():
+                        full_name = f"{user.get('prenume', '')} {user.get('nume', '')}".strip()
+                        user_details_map[user.get('id')] = full_name if full_name else user.get('email')
+
+            for conn in connections:
+                p_id = conn.get('utilizator1Id') if conn.get('utilizator2Id') == self.current_user_id else conn.get(
+                    'utilizator2Id')
+                display_name = user_details_map.get(p_id, f"Utilizator {p_id}")
+                status = conn.get('status')
+
+                display_status = "⌛" if status == "asteptare" else "✅"
+                item = QListWidgetItem(f"{display_name} {display_status}")
+                item.setData(Qt.UserRole, conn)
+
+                if status == 'asteptare' and conn.get('utilizator2Id') == self.current_user_id:
+                    item.setBackground(Qt.yellow)
+                    item.setForeground(Qt.black)
+
+                self.connections_list_widget.addItem(item)
+
+            if current_row >= 0:
+                self.connections_list_widget.setCurrentRow(current_row)
+
         except Exception as e:
-            print(f"Eroare refresh conexiuni: {e}")
+            print(f"Eroare la sincronizarea automată a conexiunilor: {e}")
 
     def on_connection_selected(self, item):
         connection_data = item.data(Qt.UserRole)
@@ -401,48 +419,59 @@ class MainWindow(QWidget):
 
     def show_menu(self):
         context_menu = QMenu(self)
+        context_menu.setStyleSheet("QMenu { background-color: #1A1927; color: white; border: 1px solid #2D2B45; }")
 
-        add_event_action = context_menu.addAction("Adauga Eveniment")
-        create_connection_action = context_menu.addAction("Creaza conexiune")
-        sync_calendar_action = context_menu.addAction("Sincronizeaza calendarul")
-        share_plans_action = context_menu.addAction("Partajeaza planuri")
-        send_message_action = context_menu.addAction("Trimite mesaj")
-        view_shared_plans_action = context_menu.addAction("Calendare Partajate")
-        sync_google_action = context_menu.addAction("Sincronizeaza cu Google Calendar")
+        add_event_action = context_menu.addAction("📅 Adăugă Eveniment")
+        create_connection_action = context_menu.addAction("🤝 Creează conexiune")
+        sync_calendar_action = context_menu.addAction("🔄 Sincronizează calendarul")
+        view_gantt_action = context_menu.addAction("📊 Vizualizează Diagrama Gantt")
+        share_plans_action = context_menu.addAction("📤 Partajează planuri")
+        send_message_action = context_menu.addAction("💬 Trimite mesaj")
+        view_shared_plans_action = context_menu.addAction("📂 Calendare Partajate")
+        sync_google_action = context_menu.addAction("🌐 Google Calendar Sync")
 
         manage_team_action, statistics_action, manage_tasks_action = None, None, None
 
         if self.current_user_role == 'team_leader':
             context_menu.addSeparator()
-            manage_team_action = context_menu.addAction("Management Echipa")
-            statistics_action = context_menu.addAction("Vezi Statistici")
+            manage_team_action = context_menu.addAction("👥 MANAGEMENT ECHIPĂ")
+            statistics_action = context_menu.addAction("📈 VEZI STATISTICI")
         elif self.current_user_role == 'angajat':
             context_menu.addSeparator()
-            manage_tasks_action = context_menu.addAction("Sarcinile Mele")
+            manage_tasks_action = context_menu.addAction("📝 SARCINILE MELE")
 
         context_menu.addSeparator()
-        logout_action = context_menu.addAction("Logout")
+        logout_action = context_menu.addAction("🚪 Logout")
 
         point = self.menu_button.mapToGlobal(self.menu_button.rect().bottomLeft())
         selected_action = context_menu.exec_(point)
 
         if selected_action:
-            if selected_action == add_event_action: self.handle_add_event()
-            elif selected_action == create_connection_action: self.handle_add_connection()
-            elif selected_action == share_plans_action: self.handle_share_plan()
+            if selected_action == add_event_action:
+                self.handle_add_event()
+            elif selected_action == create_connection_action:
+                self.handle_add_connection()
+            elif selected_action == share_plans_action:
+                self.handle_share_plan()
             elif selected_action == manage_team_action:
-                self.team_management_win = TeamManagementWindow(self.jwt_token, self.current_user_id)
-                self.team_management_win.show()
+                self.handle_open_team_management()
             elif selected_action == manage_tasks_action:
                 self.tasks_win = TasksWindow(self.jwt_token, self.current_user_id)
                 self.tasks_win.show()
             elif selected_action == sync_google_action:
                 self.handle_sync_with_google()
-            elif selected_action == sync_calendar_action: self.handle_sync_calendars()
-            elif selected_action == statistics_action: self.handle_show_statistics()
-            elif selected_action == view_shared_plans_action: self.handle_show_shared_plans()
-            elif selected_action == send_message_action: self.handle_send_message()
-            elif selected_action == logout_action:self.handle_logout()
+            elif selected_action == sync_calendar_action:
+                self.handle_sync_calendars()
+            elif selected_action == statistics_action:
+                self.handle_show_statistics()
+            elif selected_action == view_shared_plans_action:
+                self.handle_show_shared_plans()
+            elif selected_action == send_message_action:
+                self.handle_send_message()
+            elif selected_action == view_gantt_action:
+                self.handle_show_gantt()
+            elif selected_action == logout_action:
+                self.handle_logout()
 
     def handle_add_event(self):
         selected_date = self.calendar_widget.selectedDate()
@@ -464,7 +493,7 @@ class MainWindow(QWidget):
             try:
                 response = requests.post(events_url, headers=headers, json=event_data)
                 if response.status_code == 201:
-                    QMessageBox.information(self, "Succes", "Eveniment adăugat!")
+                    SuccessDialog("Eveniment adăugat!", self).exec_()
                     self.load_calendar_events()
                 else:
                     QMessageBox.critical(self, "Eroare", f"Eroare server: {response.text}")
@@ -484,7 +513,7 @@ class MainWindow(QWidget):
             try:
                 response = requests.post(connections_url, headers=headers, json=payload)
                 if response.status_code == 200:
-                    QMessageBox.information(self, "Succes", "Cererea de conexiune a fost trimisa.")
+                    SuccessDialog("Cererea de conexiune a fost trimisa.", self).exec_()
                     self.load_connections()
                 else:
                     error_data = response.json()
@@ -499,7 +528,7 @@ class MainWindow(QWidget):
         try:
             response = requests.put(update_url, headers=headers, json=payload)
             if response.status_code == 200:
-                QMessageBox.information(self, "Succes", f"Cererea a fost marcata ca '{new_status}'.")
+                SuccessDialog(f"Cererea a fost marcata ca '{new_status}'.", self).exec_()
                 self.load_connections()
             else:
                 QMessageBox.critical(self, "Eroare", "Nu s-a putut actualiza statusul conexiunii.")
@@ -531,7 +560,7 @@ class MainWindow(QWidget):
             try:
                 response = requests.post(share_url, headers=headers, json=payload)
                 if response.status_code == 200:
-                    QMessageBox.information(self, "Succes", "Planul a fost partajat.")
+                    SuccessDialog("Planul a fost partajat.", self).exec_()
                 else:
                     QMessageBox.critical(self, "Eroare", f"Nu s-a putut partaja planul: {response.text}")
             except requests.exceptions.RequestException as e:
@@ -540,6 +569,21 @@ class MainWindow(QWidget):
     def handle_show_shared_plans(self):
         self.shared_plans_win = SharedPlansWindow(self.jwt_token, self.current_user_id)
         self.shared_plans_win.show()
+
+    def handle_show_gantt(self):
+        from project_select_dialog import ProjectSelectDialog
+
+        dialog = ProjectSelectDialog(self.jwt_token, self.current_user_id, self.current_user_role, self)
+
+        if dialog.exec_() == QDialog.Accepted:
+            project = dialog.get_selected_project()
+            if project:
+                self.gantt_win = GanttWindow(
+                    project_id=project['id'],
+                    token=self.jwt_token,
+                    project_name=project['nume']  # Transmitem numele pentru titlu
+                )
+                self.gantt_win.show()
 
     def load_calendar_events(self):
         print("incercare de a incarca evenimentele din calendar...")
@@ -578,7 +622,11 @@ class MainWindow(QWidget):
                 details_response = requests.post(details_url, headers=headers, json=list(partner_ids))
                 if details_response.status_code == 200:
                     details_list = details_response.json()
-                    user_details_map = {user.get('id'): user.get('email', 'Email necunoscut') for user in details_list}
+                    for user in details_list:
+                        fname = user.get('prenume', '')
+                        lname = user.get('nume', '')
+                        full_name = f"{fname} {lname}".strip()
+                        user_details_map[user.get('id')] = full_name if full_name else user.get('email')
                 else:
                     print("Avertisment: Nu s-au putut prelua detaliile utilizatorilor.")
             for conn in connections:
@@ -620,7 +668,11 @@ class MainWindow(QWidget):
                 details_response = requests.post(details_url, headers=headers, json=list(partner_ids))
                 if details_response.status_code == 200:
                     details_list = details_response.json()
-                    user_details_map = {user.get('id'): user.get('email', 'Email necunoscut') for user in details_list}
+                    for user in details_list:
+                        fname = user.get('prenume', '')
+                        lname = user.get('nume', '')
+                        full_name = f"{fname} {lname}".strip()
+                        user_details_map[user.get('id')] = full_name if full_name else user.get('email')
 
             for conn in connections:
                 partner_id = conn.get('utilizator1Id') if conn.get('utilizator2Id') == current_user_id else conn.get(
@@ -672,7 +724,7 @@ class MainWindow(QWidget):
 
                             display_text += f"• in data de {date_str}, intre orele {start_time_str} si {end_time_str}\n"
 
-                    QMessageBox.information(self, "Rezultat Sincronizare", display_text)
+                    InfoDialog("Rezultat Sincronizare", display_text, self).exec_()
 
                 else:
                     QMessageBox.critical(self, "Eroare", f"Sincronizarea a esuat: {response.text}")
@@ -705,3 +757,19 @@ class MainWindow(QWidget):
     def handle_sync_with_google(self):
         self.google_sync_dialog = GoogleSyncDialog(self.jwt_token, self.current_user_id, self)
         self.google_sync_dialog.exec_()
+
+    def load_all_sidebar_data(self):
+        self.load_connections()
+        if hasattr(self, 'load_teams'):
+            self.load_teams()
+
+
+    def handle_open_team_board(self, item):
+        team_data = item.data(Qt.UserRole)
+        if team_data:
+            self.board_win = TeamBoardWindow(team_data['id'], team_data['nume'], self.jwt_token)
+            self.board_win.show()
+
+    def handle_open_team_management(self):
+        self.team_hub_win = TeamsHubWindow(self.jwt_token, self.current_user_id)
+        self.team_hub_win.show()

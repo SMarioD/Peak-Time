@@ -17,9 +17,9 @@ class AutoSyncTask(
                 googleCalendarService.syncEventsToInternalCalendar(token.userId)
             } catch (e: Exception) {
                 if (e.message?.contains("401") == true || e is IllegalStateException) {
-                    println("CRITICAL: Sesiune Google expirată/invalidă pentru user ${token.userId}. Sincronizarea este oprită până la reconectare.")
+                    println("CRITICAL: Sesiune Google expirata/invalida pentru user ${token.userId}. Sincronizarea este oprita pana la reconectare.")
                 } else {
-                    println("EROARE TEMPORARĂ user ${token.userId}: ${e.message}")
+                    println("EROARE TEMPORARa user ${token.userId}: ${e.message}")
                 }
             }
         }
