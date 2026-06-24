@@ -31,9 +31,9 @@ class StatisticsWindow(QWidget):
 
         header = self.stats_table.horizontalHeader()
         header.setSectionResizeMode(0, QHeaderView.Stretch)
-        header.setSectionResizeMode(1, QHeaderView.Interactive)
-        header.setSectionResizeMode(2, QHeaderView.Interactive)
-        header.setSectionResizeMode(3, QHeaderView.Interactive)
+        header.setSectionResizeMode(1, QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(2, QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(3, QHeaderView.ResizeToContents)
 
         self.stats_table.setAlternatingRowColors(True)
         self.stats_table.setStyleSheet("""
@@ -131,7 +131,7 @@ class StatisticsWindow(QWidget):
                 completed_item.setTextAlignment(Qt.AlignCenter)
                 self.stats_table.setItem(i, 2, completed_item)
 
-                avg_hours = user_stats.get('averageCompletionHours', 0.0) if user_stats else 0.0
+                avg_hours = user_stats.get('avgCompletionTimeHours', 0.0) if user_stats else 0.0
                 avg_item = QTableWidgetItem(f"{avg_hours:.2f} h")
                 avg_item.setTextAlignment(Qt.AlignCenter)
                 avg_item.setForeground(QColor("#00ff00") if avg_hours > 0 else QColor("#888"))

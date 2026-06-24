@@ -1,6 +1,23 @@
+import os
+import tempfile
 from PyQt5.QtGui import QPalette, QColor
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QLabel, QPushButton
 from PyQt5.QtCore import Qt
+
+_SVG_ARROW_CONTENT = """<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9d8fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>"""
+
+try:
+    _temp_dir = tempfile.gettempdir()
+    TEMP_SVG_PATH = os.path.join(_temp_dir, "qt_combobox_down_arrow.svg").replace("\\", "/")
+    with open(TEMP_SVG_PATH, "w", encoding="utf-8") as _f:
+        _f.write(_SVG_ARROW_CONTENT)
+except Exception:
+    TEMP_SVG_PATH = "qt_combobox_down_arrow.svg"
+    try:
+        with open(TEMP_SVG_PATH, "w", encoding="utf-8") as _f:
+            _f.write(_SVG_ARROW_CONTENT)
+    except Exception:
+        TEMP_SVG_PATH = ""
 
 C = {
     # Fundal
@@ -382,37 +399,38 @@ QCalendarWidget QAbstractItemView:enabled QTableView::item:last-child {{
 
 /*DROPDOWN / COMBOBOX*/
 
-QComboBox {{
-    background-color: {C['bg_raised']};
+QComboBox, QDateTimeEdit {{
+    background-color: {C['bg_surface']};
     border: 1px solid {C['border']};
-    border-radius: 8px;
-    padding: 8px 12px;
-    font-size: 13px;
+    padding: 8px;
+    border-radius: 6px;
     color: {C['text_primary']};
-    min-width: 120px;
+    font-size: 13px;
 }}
 
-QComboBox:hover {{
+QComboBox:hover, QDateTimeEdit:hover {{
     border-color: {C['accent_muted']};
 }}
 
-QComboBox:focus {{
+QComboBox:focus, QDateTimeEdit:focus {{
     border-color: {C['border_focus']};
 }}
 
-QComboBox::drop-down {{
-    border: none;
-    width: 28px;
+QComboBox::drop-down, QDateTimeEdit::drop-down {{
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 25px;
+    border-left-width: 1px;
+    border-left-color: {C['border']};
+    border-left-style: solid;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
 }}
-
-QComboBox::down-arrow {{
-    image: none;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 6px solid {C['text_muted']};
-    width: 0;
-    height: 0;
-    margin-right: 8px;
+QComboBox::down-arrow, QDateTimeEdit::down-arrow {{
+    image: url("{TEMP_SVG_PATH}");
+    width: 14px;
+    height: 14px;
+    margin-top: 1px;
 }}
 
 QComboBox QAbstractItemView {{
@@ -428,7 +446,7 @@ QComboBox QAbstractItemView {{
 
 /*SPINBOX*/
 
-QSpinBox, QDoubleSpinBox, QDateTimeEdit {{
+QSpinBox, QDoubleSpinBox {{
     background-color: {C['bg_raised']};
     border: 1px solid {C['border']};
     border-radius: 8px;
@@ -453,13 +471,6 @@ QDateTimeEdit::up-button, QDateTimeEdit::down-button {{
 QSpinBox::up-button:hover, QSpinBox::down-button:hover,
 QDoubleSpinBox::up-button:hover, QDoubleSpinBox::down-button:hover {{
     background-color: {C['accent_muted']};
-}}
-
-QDateTimeEdit::drop-down {{
-    border: none;
-    width: 22px;
-    background: {C['bg_overlay']};
-    border-radius: 4px;
 }}
 
 /*MENIU CONTEXTUAL*/

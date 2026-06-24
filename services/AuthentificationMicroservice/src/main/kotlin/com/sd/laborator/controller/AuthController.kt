@@ -20,13 +20,13 @@ import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.DisabledException
 import org.springframework.security.authentication.LockedException
-
+import javax.validation.Valid
 
 @RestController
 @RequestMapping("/api/v1/auth")
 class AuthController (private val authService: AuthService) {
     @PostMapping("/register")
-    fun register(@RequestBody request: RegisterRequest): ResponseEntity<Any> {
+    fun register(@Valid @RequestBody request: RegisterRequest): ResponseEntity<Any> {
         return try {
             val registeredUser = authService.registerUser(request)
             val response = mapOf(
@@ -124,4 +124,5 @@ class AuthController (private val authService: AuthService) {
             ResponseEntity.status(HttpStatus.NOT_FOUND).body(mapOf("error" to e.message))
         }
     }
+
 }
